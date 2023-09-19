@@ -1,0 +1,56 @@
+{
+  "name": "Super Science Quiz",
+  "description": "There are a bunch of science questions here. Zoo Wee Mama.",
+  "quiz": [
+    {
+      "question": "What is the chemical symbol for water?",
+      "correctanswer": "H2O",
+      "badanswers": ["O2", "CO2", "CH4"]
+    },
+    {
+      "question": "Who developed the theory of relativity?",
+      "correctanswer": "Albert Einstein",
+      "badanswers": ["Isaac Newton", "Niels Bohr", "Galileo Galilei"]
+    },
+    {
+      "question": "What planet is known as the Red Planet?",
+      "correctanswer": "Mars",
+      "badanswers": ["Venus", "Jupiter", "Saturn"]
+    },
+    {
+      "question": "What is the powerhouse of the cell?",
+      "correctanswer": "Mitochondria",
+      "badanswers": ["Nucleus", "Ribosome", "Golgi Apparatus"]
+    },
+    {
+      "question": "What is the atomic number of carbon?",
+      "correctanswer": "6",
+      "badanswers": ["12", "14", "8"]
+    },
+    {
+      "question": "Which gas do plants absorb from the atmosphere?",
+      "correctanswer": "Carbon Dioxide",
+      "badanswers": ["Oxygen", "Nitrogen", "Methane"]
+    },
+    {
+      "question": "What is the most abundant gas in Earth's atmosphere?",
+      "correctanswer": "Nitrogen",
+      "badanswers": ["Oxygen", "Carbon Dioxide", "Argon"]
+    },
+    {
+      "question": "Who is known as the father of modern physics?",
+      "correctanswer": "Isaac Newton",
+      "badanswers": ["Albert Einstein", "Galileo Galilei", "Stephen Hawking"]
+    },
+    {
+      "question": "Which element has the chemical symbol 'Au'?",
+      "correctanswer": "Gold",
+      "badanswers": ["Silver", "Copper", "Aluminum"]
+    },
+    {
+      "question": "What is the boiling point of water at sea level?",
+      "correctanswer": "100°C",
+      "badanswers": ["90°C", "110°C", "212°C"]
+    }
+  ]
+}

@@ -1,1 +1,7 @@
-461 - means that name of the quiz you requested cannot be found in the storage service.
+460 - "PoorlyFormattedRequest" - The JSON sent does not have the proper keys and values for the given request.
+
+461 - "QuizNotFound" - Requested quiz name not found
+
+462 - "JSONParseError" - The JSON could not be found, or it could not be parsed as JSON.
+
+463 - "DuplicateQuizName" - There already exists a quiz of that name.

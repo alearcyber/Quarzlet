@@ -1,0 +1,8 @@
+docker image build -t <name> <docker-file-location>
+    - Builds a docker image.
+    - <name> is the name of the docker image.
+    - <docker-file-location> tells docker where to look for the docker file.
+
+
+docker run -p 5555:5555 -d quiz_store
+    - Example run command

@@ -1,0 +1,63 @@
+
+Response to what quizzes are available:
+    {"quizzes":
+        [
+            {
+                "description":"There are a bunch of science questions here. Zoo Wee Mama.",
+                "name":"Super Science Quiz"
+            },
+            {
+                "description":"This is a math quiz with basic arethmatic.",
+                "name":"Basic Math Quiz"
+            },
+            {
+                "description":"These questions are about the history and culture of the entire world.",
+                "name":"History of the World"
+            }
+        ]
+    }
+
+
+
+
+A quiz represented as JSON:
+    {
+      "name": "<name of the quiz>",
+      "description": "<description of the quiz>",
+      "quiz": [
+        {
+          "question": "<question text>",
+          "correctanswer": "<correct answer>",
+          "badanswers": ["<incorrect answer 1>", "<incorrect answer 2>", "<incorrect answer 3>"]
+        },
+        {
+          "question": "<question text>",
+          "correctanswer": "<correct answer>",
+          "badanswers": ["<incorrect answer 1>", "<incorrect answer 2>", "<incorrect answer 3>"]
+        },
+        ...
+        {
+          "question": "<last question text>",
+          "correctanswer": "<correct answer>",
+          "badanswers": ["<incorrect answer 1>", "<incorrect answer 2>", "<incorrect answer 3>"]
+        }
+      ]
+    }
+
+
+Success message:
+    {
+        "status": 1,
+        "message": "<description of success>"
+    }
+
+
+Failure Message:
+    {
+        "status": 0,
+        "message": "<description of success>"
+    }
+
+
+
+

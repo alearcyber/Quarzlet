@@ -1,0 +1,56 @@
+{
+  "name": "History of the World",
+  "description": "These questions are about the history and culture of the entire world.",
+  "quiz": [
+    {
+      "question": "Who was the first President of the United States?",
+      "correctanswer": "George Washington",
+      "badanswers": ["Thomas Jefferson", "Benjamin Franklin", "John Adams"]
+    },
+    {
+      "question": "In what year did World War II end?",
+      "correctanswer": "1945",
+      "badanswers": ["1944", "1946", "1939"]
+    },
+    {
+      "question": "Which ancient wonder was found in Egypt?",
+      "correctanswer": "Great Pyramid of Giza",
+      "badanswers": ["Hanging Gardens of Babylon", "Statue of Zeus", "Temple of Artemis"]
+    },
+    {
+      "question": "What is the capital of ancient Rome?",
+      "correctanswer": "Rome",
+      "badanswers": ["Athens", "Sparta", "Carthage"]
+    },
+    {
+      "question": "Who wrote the Declaration of Independence?",
+      "correctanswer": "Thomas Jefferson",
+      "badanswers": ["Benjamin Franklin", "John Hancock", "Alexander Hamilton"]
+    },
+    {
+      "question": "Which ship carried the Pilgrims to America?",
+      "correctanswer": "Mayflower",
+      "badanswers": ["Santa Maria", "Endeavour", "Golden Hind"]
+    },
+    {
+      "question": "Who is known for making the laws of motion?",
+      "correctanswer": "Isaac Newton",
+      "badanswers": ["Albert Einstein", "Galileo Galilei", "Johannes Kepler"]
+    },
+    {
+      "question": "Which war was fought between the North and South in the United States?",
+      "correctanswer": "Civil War",
+      "badanswers": ["Revolutionary War", "World War I", "Vietnam War"]
+    },
+    {
+      "question": "What is the Renaissance known for?",
+      "correctanswer": "Cultural Rebirth",
+      "badanswers": ["Industrial Revolution", "Discovery of America", "Fall of Rome"]
+    },
+    {
+      "question": "Who was the first woman to fly solo across the Atlantic?",
+      "correctanswer": "Amelia Earhart",
+      "badanswers": ["Sally Ride", "Bessie Coleman", "Harriet Quimby"]
+    }
+  ]
+}

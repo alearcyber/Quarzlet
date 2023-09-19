@@ -1,0 +1,56 @@
+{
+  "name": "Basic Math Quiz",
+  "description": "This is a math quiz with basic arethmatic.",
+  "quiz": [
+    {
+      "question": "What is 5 + 6?",
+      "correctanswer": "11",
+      "badanswers": ["12", "13", "10"]
+    },
+    {
+      "question": "What is 2 * 3?",
+      "correctanswer": "6",
+      "badanswers": ["2", "4", "5"]
+    },
+    {
+      "question": "What is 9 - 4?",
+      "correctanswer": "5",
+      "badanswers": ["3", "6", "4"]
+    },
+    {
+      "question": "What is 8 / 4?",
+      "correctanswer": "2",
+      "badanswers": ["1", "3", "4"]
+    },
+    {
+      "question": "What is 3 + 7?",
+      "correctanswer": "10",
+      "badanswers": ["9", "11", "12"]
+    },
+    {
+      "question": "What is 4 * 5?",
+      "correctanswer": "20",
+      "badanswers": ["21", "19", "18"]
+    },
+    {
+      "question": "What is 6 - 1?",
+      "correctanswer": "5",
+      "badanswers": ["4", "7", "6"]
+    },
+    {
+      "question": "What is 7 / 1?",
+      "correctanswer": "7",
+      "badanswers": ["6", "8", "5"]
+    },
+    {
+      "question": "What is 10 + 10?",
+      "correctanswer": "20",
+      "badanswers": ["19", "21", "18"]
+    },
+    {
+      "question": "What is 5 * 2?",
+      "correctanswer": "10",
+      "badanswers": ["9", "11", "8"]
+    }
+  ]
+}
