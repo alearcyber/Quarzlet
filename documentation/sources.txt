@@ -1,0 +1,2 @@
+1) CSS provided by Bootstrap v4.0 - https://getbootstrap.com/
+2) "Take.html" used code from Bootstrap Examples - https://getbootstrap.com/docs/4.1/examples/dashboard/

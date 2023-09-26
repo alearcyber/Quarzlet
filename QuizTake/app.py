@@ -27,3 +27,8 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     return render_template("index.html")
+
+
+@app.route("/take")
+def take():
+    return render_template("take-sample.html")
