@@ -10,7 +10,7 @@ for %%x in (%*) do set /A argC+=1
 Rem Check if there are any arguments
 Rem Set default values if not
 if %argC%==0 (
-    BIND=127.0.0.1:8000
+    set BIND=127.0.0.1:8000
 ) else (
     set BIND=%1
 )

@@ -1,0 +1,17 @@
+/* Custom Navbar Overrides */
+
+.navbar-custom {
+    background-color: rgb(28, 28, 150);
+}
+
+.navbar-custom .navbar-brand {
+    color: white;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.navbar-custom .nav-link {
+    color: white;
+    font-weight: 550;
+    font-size: 1.2rem;
+}
