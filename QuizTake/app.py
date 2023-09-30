@@ -19,23 +19,21 @@
 ###################################################################
 
 # Imports
-from flask import Flask, render_template, redirect, url_for, request, session
+from flask import Flask, render_template, redirect, url_for, request
 
 app = Flask(__name__)
 
 
 def generate_quiz_list():
-
     # Make database query for all quiz titles
     quiz_titles = ["Pikachu"*10, "Charizard", "Squirtle", "Jigglypuff",
                    "Bulbasaur", "Gengar", "Charmander", "Mew", "Lugia", "Gyarados"]
-    total_quizzes = len(quiz_titles)
-    quizzes = []
+    quiz_urls = []
 
     for title in quiz_titles:
-        quizzes.append({"name": title, "url": url_for("quiz", filename="templates/quiz.html")})
+        quiz_urls.append({"name": title, "url": url_for("quiz", quiz=title)})
 
-    app.jinja_env.globals.update(quizzes=quizzes, current_quiz="")
+    app.jinja_env.globals.update(quizzes=quiz_urls, current_quiz="")
 
 
 @app.route("/")
@@ -49,7 +47,20 @@ def index():
 @app.route("/quiz")
 def quiz():
     # HTTP GET the quiz name
+    quiz_name = request.args.get("quiz")
     
-    # Update current quiz name in session
+    # Use the name to fetch the quiz data from the database
+    # If it is not there, then redirect to quiz not found page.
+    quiz_data = {}
+    
+    return quiz_not_found()
+    
+    
+    # Update current quiz name in session and render webpage
+    app.jinja_env.globals.update(current_quiz=quiz_name)
+    return render_template("quiz.html", quiz_data=quiz_data)
+
+
+def quiz_not_found():
     app.jinja_env.globals.update(current_quiz="")
-    return render_template("quiz.html")
+    return render_template("quiz_not_found.html")
