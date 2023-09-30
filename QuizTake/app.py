@@ -24,9 +24,17 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 
+# Take Quiz page
 @app.route("/")
 def index():
-    return render_template("index.html")
+    # Make initial database query for all quiz titles
+    quiz_titles = ["Pikachu"*10, "Charizard", "Squirtle", "Jigglypuff",
+                   "Bulbasaur", "Gengar", "Charmander", "Mew", "Lugia", "Gyarados"]
+    quiz_titles += quiz_titles
+    quiz_titles += quiz_titles
+
+    # Supply the quiz titles to the template to render sidebar
+    return render_template("index.html", len=len(quiz_titles), quiz_titles=quiz_titles)
 
 
 @app.route("/take")

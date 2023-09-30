@@ -3,17 +3,19 @@
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, shrink-to-fit=no" />
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap/bootstrap.min.css') }}" />
 
         <!-- Custom CSS -->
         <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar-custom.css') }}" />
+        {% block css %} {% endblock %}
 
         <title>{% block title %}Quarzlet{% endblock %}</title>
     </head>
     <body>
+        <!-- @bookmark Navbar -->
         <nav class="navbar navbar-custom navbar-expand-lg flex-md-nowrap p-2">
             <div class="container-fluid">
                 <a class="navbar-brand col-sm-1 mr-0" href="{{ url_for('index', filename='templates/index.html') }}">Quarzlet</a>
