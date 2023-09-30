@@ -4750,6 +4750,9 @@ tbody.collapse.show {
     color: #495057;
     text-align: inherit;
 }
+.list-group-item-action-active {
+    color: #7ab0eb;
+}
 .list-group-item-action:focus,
 .list-group-item-action:hover {
     color: #495057;
@@ -4757,7 +4760,7 @@ tbody.collapse.show {
     background-color: #f8f9fa;
 }
 .list-group-item-action:active {
-    color: #212529;
+    color: #495057;
     background-color: #e9ecef;
 }
 .list-group-item {

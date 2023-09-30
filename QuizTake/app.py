@@ -19,24 +19,37 @@
 ###################################################################
 
 # Imports
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for, request, session
 
 app = Flask(__name__)
 
 
-# Take Quiz page
-@app.route("/")
-def index():
-    # Make initial database query for all quiz titles
+def generate_quiz_list():
+
+    # Make database query for all quiz titles
     quiz_titles = ["Pikachu"*10, "Charizard", "Squirtle", "Jigglypuff",
                    "Bulbasaur", "Gengar", "Charmander", "Mew", "Lugia", "Gyarados"]
-    quiz_titles += quiz_titles
-    quiz_titles += quiz_titles
+    total_quizzes = len(quiz_titles)
+    quizzes = []
 
-    # Supply the quiz titles to the template to render sidebar
-    return render_template("index.html", len=len(quiz_titles), quiz_titles=quiz_titles)
+    for title in quiz_titles:
+        quizzes.append({"name": title, "url": url_for("quiz", filename="templates/quiz.html")})
+
+    app.jinja_env.globals.update(quizzes=quizzes, current_quiz="")
 
 
-@app.route("/take")
-def take():
-    return render_template("take-sample.html")
+@app.route("/")
+def index():
+    # Quiz list for sidebar
+    generate_quiz_list()
+
+    return render_template("index.html")
+
+
+@app.route("/quiz")
+def quiz():
+    # HTTP GET the quiz name
+    
+    # Update current quiz name in session
+    app.jinja_env.globals.update(current_quiz="")
+    return render_template("quiz.html")

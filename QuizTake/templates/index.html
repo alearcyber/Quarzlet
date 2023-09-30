@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-{% extends 'base.html' %} {% block css%}
+{% import "macros.html" as macros %} {% extends 'base.html' %} {% block css%}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}" />
 {% endblock %} {% block content %}
 
@@ -13,26 +13,19 @@
                 <span>Select Quiz</span>
             </h6>
             <!--@bookmark Quiz List-->
-            <div class="list-group h-100 sidebar-item">
-                {%for i in range(0,len)%}
-                <a class="list-group-item list-group-item-action bg-light" href="#">{{quiz_titles[i]}}</a>
-                {% endfor %}
-            </div>
+            {{macros.build_quiz_list(quizzes=quizzes, selected=current_quiz)}}
         </ul>
     </div>
 
+    {% block quiz_content %}
     <!--@bookmark Main Content-->
     <div class="col-md-9 ml-sm-auto col-lg-10 px-4 main">
-        <!--@bookmark Quiz Title-->
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Quiz Title Here</h1>
+            <h1 class="h2">Welcome!</h1>
         </div>
-
-        <!--@bookmark Loaded Quiz-->
-        {%for i in range(0,len)%}
-        <p>{{quiz_titles[i]}}</p>
-        {% endfor %}
+        <p>Select a quiz from the left panel.</p>
     </div>
+    {% endblock %}
 </div>
 
 {% endblock %}

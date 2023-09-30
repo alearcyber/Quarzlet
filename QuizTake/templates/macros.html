@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+
+<!--@bookmark Macro Quiz Sidebar-->
+{% macro build_quiz_list(quizzes, selected) %}
+<div class="list-group h-100 sidebar-item">
+    {% for quiz in quizzes %}
+    <a href="{{quiz.url}}" class="list-group-item bg-light {% if selected == quiz.name %}list-group-item-action-active{% else %}list-group-item-action{% endif %}">{{quiz.name}}</a>
+    {% endfor %}
+</div>
+{% endmacro %}
