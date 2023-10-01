@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 
 <!--@bookmark Macro Quiz Sidebar-->
-{% macro build_quiz_list(quizzes, selected) %}
+{% macro build_quiz_list(quizzes, quizzes_len, selected) %}
 <div class="list-group h-100 sidebar-item">
-    {% for quiz in quizzes %}
+    <!--If no quizzes, then return a single entry stating so.-->
+    {% if quizzes_len <= 0 %}
+    <a href="#" class="list-group-item list-group-item-action bg-light">No quizzes available.</a>
+    <!--Else, list all quizzes in a for-loop-->
+    {% else %} {% for quiz in quizzes %}
+    <!--If the quiz is currently selected, set it to the active class-->
     <a href="{{quiz.url}}" class="list-group-item bg-light {% if selected == quiz.name %}list-group-item-action-active{% else %}list-group-item-action{% endif %}">{{quiz.name}}</a>
-    {% endfor %}
+    {% endfor %} {% endif %}
 </div>
 {% endmacro %}

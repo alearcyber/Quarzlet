@@ -13,7 +13,8 @@
                 <span>Select Quiz</span>
             </h6>
             <!--@bookmark Quiz List-->
-            {{macros.build_quiz_list(quizzes=quizzes, selected=current_quiz)}}
+            <!--Macros defined in Macros.html-->
+            {{macros.build_quiz_list(quizzes=quizzes, quizzes_len=quizzes_len, selected=current_quiz)}}
         </ul>
     </div>
 

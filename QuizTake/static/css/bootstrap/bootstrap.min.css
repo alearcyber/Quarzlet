@@ -4748,10 +4748,13 @@ tbody.collapse.show {
 .list-group-item-action {
     width: 100%;
     color: #495057;
+    font-weight: 500;
     text-align: inherit;
 }
 .list-group-item-action-active {
-    color: #7ab0eb;
+    color: #007bff;
+    font-weight: 600;
+    background-color: #e9ecef;
 }
 .list-group-item-action:focus,
 .list-group-item-action:hover {
