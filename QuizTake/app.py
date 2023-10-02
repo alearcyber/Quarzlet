@@ -20,13 +20,33 @@ from flask import Flask, render_template, redirect, url_for, request, session
 import random
 import configparser
 
-config = configparser.ConfigParser()
-config.read(r'config/flask.ini')
+def init_flask_config():
+    # Initialize the Flask secret key from the config file and return it
+    
+    # Check if config file exists
+    import os
+    if not os.path.exists(r'config/flask.ini'):
+        raise Exception("Please create a config/flask.ini file before running the server. See config/flask.ini.example for an example.")
+    
+    # Read the secret key from the config file
+    config = configparser.ConfigParser()
+    config.read(r'config/flask.ini')
 
+    if config['credentials']['secret'] == "ChangeMe":
+        raise Exception("Please change the secret key to a cryptographically secure value in config/flask.ini before running the server.")
+    
+    return config['credentials']['secret']
+    
+###################################################################
+# Main - Initialize the Flask app
+###################################################################
 app = Flask(__name__)
-app.secret_key = config['credentials']['secret']
+app.secret_key = init_flask_config()
 
+
+# App Functions
 def generate_quiz_list():
+    # Create quiz list for sidebar
     # @TODO Make database query for all quiz titles
     # @DEBUG - Hardcoded quiz data
     quiz_titles = ["Pikachu"*20, "Charizard", "Squirtle", "Jigglypuff",
@@ -35,17 +55,22 @@ def generate_quiz_list():
     quiz_titles += quiz_titles
     quiz_urls = []
 
+    # Assign a url for every quiz title
     for title in quiz_titles:
         quiz_urls.append({"name": title, "url": url_for("quiz", quiz=title)})
     quizzes_len = len(quiz_urls)
     
+    # Set the user's current quiz to empty
     session['current_quiz'] = ""
     
+    # Update the global variables for the quiz list and the current quiz. quizzes_len is used by the Jinja syntax to determine if the quiz list is empty or not.
     app.jinja_env.globals.update(quizzes=quiz_urls, quizzes_len=quizzes_len, current_quiz=session['current_quiz'])
 
 
 @app.route("/")
 def index():
+    # Landing page for the app
+    
     # Quiz list for sidebar
     generate_quiz_list()
 
@@ -54,7 +79,7 @@ def index():
 
 @app.route("/quiz")
 def quiz():
-    # HTTP GET the quiz name
+    # Get the quiz name
     quiz_name = request.args.get("quiz")
     
     # Use the name to fetch the quiz data from the database
@@ -99,8 +124,6 @@ def check_quiz():
     
     return render_template("results.html", results=results)
     
-    
-        
 
 @app.route("/quiz_not_found")
 def quiz_not_found():
@@ -108,3 +131,4 @@ def quiz_not_found():
     session['current_quiz'] = ""
     app.jinja_env.globals.update(current_quiz=session['current_quiz'])
     return render_template("quiz_not_found.html")
+
