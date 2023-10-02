@@ -2652,14 +2652,15 @@ fieldset:disabled a.btn {
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
 }
 .btn-outline-secondary {
-    color: #6c757d;
-    background-color: transparent;
+    font-weight: 600;
+    color: #6f9bc5;
+    background-color: #6f9bc526;
     background-image: none;
-    border-color: #6c757d;
+    border-color: #6f9bc5;
 }
 .btn-outline-secondary:hover {
     color: #fff;
-    background-color: #6c757d;
+    background-color: #0c70db;
     border-color: #6c757d;
 }
 .btn-outline-secondary.focus,
