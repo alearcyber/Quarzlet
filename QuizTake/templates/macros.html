@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<!--@bookmark Macro Quiz Sidebar-->
+<!--Macro Quiz Sidebar-->
 {% macro build_quiz_list(quizzes, quizzes_len, selected) %}
 <div class="list-group h-100 sidebar-item">
     <!--If no quizzes, then return a single entry stating so.-->
@@ -14,7 +14,7 @@
 </div>
 {% endmacro %}
 
-<!--@bookmark Macro Quiz Content-->
+<!--Macro Quiz Content-->
 {% macro build_quiz_content(num, question, answers) %}
 <!--Question-->
 <div class="form-row border-bottom" style="width: 100%; word-break: break-word">
@@ -35,7 +35,7 @@
 
 {% endmacro %}
 
-<!--@bookmark Macro Quiz Score-->
+<!--Macro Quiz Score-->
 {% macro score_quiz_content(num, question, correct_answer, answers, user_answer) %}
 <!--Question-->
 <div class="form-row border-bottom {% if user_answer == correct_answer %}correct{% else %}incorrect{% endif %}" style="width: 100%; word-break: break-word">

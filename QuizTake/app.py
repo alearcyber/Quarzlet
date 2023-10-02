@@ -27,7 +27,7 @@ app = Flask(__name__)
 app.secret_key = config['credentials']['secret']
 
 def generate_quiz_list():
-    # Make database query for all quiz titles
+    # @TODO Make database query for all quiz titles
     # @DEBUG - Hardcoded quiz data
     quiz_titles = ["Pikachu"*20, "Charizard", "Squirtle", "Jigglypuff",
                    "Bulbasaur", "Gengar", "Charmander", "Mew", "Lugia", "Gyarados"]

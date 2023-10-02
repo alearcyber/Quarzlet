@@ -7,7 +7,7 @@
 {% endblock %} {% block quiz_content %}
 
 <div class="col-xl-10 ml-sm-auto px-4 content">
-    <!--@bookmark Quiz Title and Score-->
+    <!--Quiz Title and Score-->
     <div class="row">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 100%; word-break: break-word">
             <h1 class="h1 col-11">{{current_quiz}}</h1>
@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <!--@bookmark Scored Quiz-->
+    <!--Scored Quiz-->
     <form class="row" id="quiz" action="/submit" method="POST" style="height: 2.5rem; font-size: 1rem; left: 20px">
         <!--Single Question-->
         <div class="col-xl">
