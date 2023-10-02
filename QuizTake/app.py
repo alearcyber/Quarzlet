@@ -32,7 +32,7 @@ def init_flask_config():
     config = configparser.ConfigParser()
     config.read(r'config/flask.ini')
 
-    if config['credentials']['secret'] == "ChangeMe":
+    if len(config['credentials']['secret']) < 64:
         raise Exception("Please change the secret key to a cryptographically secure value in config/flask.ini before running the server.")
     
     return config['credentials']['secret']
