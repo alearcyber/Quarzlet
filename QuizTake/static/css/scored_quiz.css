@@ -1,0 +1,18 @@
+/*
+* Quiz Score
+*/
+
+.score {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.correct {
+    color: green;
+    background-color: #ccffcc;
+}
+
+.incorrect {
+    color: red;
+    background-color: #ffcccc;
+}

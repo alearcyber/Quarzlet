@@ -18,29 +18,55 @@
 {% macro build_quiz_content(num, question, answers) %}
 <!--Question-->
 <div class="form-row border-bottom" style="width: 100%; word-break: break-word">
-    <label for="question{{num}}" style="font-size: 30px; margin-top: 2rem">{{num}}) {{question}}</label>
+    <label for="question{{num}}" style="font-size: 30px; margin-top: 2rem">{{num+1}}) {{question}}</label>
 </div>
 <br />
 <div class="form-row">
     <!--Answers-->
     <div class="form-check">
-        <input class="form-check-input" type="radio" name="question{{num}}" id="option1" value="{{answers[0]}}" required />
-        <label class="form-check-label" for="question{{num}}"> {{answers[0]}} </label>
+        {% for i in range(0, 4) %}
+        <input class="form-check-input" type="radio" name="question{{num}}" id="option{{i}}" value="{{answers[i]}}" required />
+        <label class="form-check-label" for="question{{num}}"> {{answers[i]}} </label>
         <br />
         <br />
+        {% endfor %}
+    </div>
+</div>
 
-        <input class="form-check-input" type="radio" name="question{{num}}" id="option2" value="{{answers[1]}}" />
-        <label class="form-check-label" for="question{{num}}"> {{answers[1]}} </label>
-        <br />
-        <br />
+{% endmacro %}
 
-        <input class="form-check-input" type="radio" name="question{{num}}" id="option3" value="{{answers[2]}}" />
-        <label class="form-check-label" for="question{{num}}"> {{answers[2]}} </label>
-        <br />
-        <br />
+<!--@bookmark Macro Quiz Score-->
+{% macro score_quiz_content(num, question, correct_answer, answers, user_answer) %}
+<!--Question-->
+<div class="form-row border-bottom {% if user_answer == correct_answer %}correct{% else %}incorrect{% endif %}" style="width: 100%; word-break: break-word">
+    <label for="question{{num}}" style="font-size: 30px; margin-top: 1rem">{{num+1}}) {{question}}</label>
+</div>
+<br />
+<div class="form-row">
+    <!--Answers-->
+    <div class="form-check">
+        {% for i in range(0, 4) %}
+        <!--If it is the user answer and it is correct-->
+        {% if user_answer == answers[i] and user_answer == correct_answer %}
+        <input class="form-check-input" checked readonly type="radio" name="question{{num}}" id="option{{i}}" value="{{answers[i]}}" />
+        <label class="form-check-label score correct" for="question{{num}}"> {{answers[i]}} </label>
+        <!--If it is the user answer and it is incorrect-->
+        {% elif user_answer == answers[i] and user_answer != correct_answer %}
+        <input class="form-check-input" checked readonly type="radio" name="question{{num}}" id="option{{i}}" value="{{answers[i]}}" />
+        <label class="form-check-label score incorrect" for="question{{num}}"> {{answers[i]}} </label>
+        <!--If it is not the user answer and it is correct-->
+        {% elif user_answer != answers[i] and answers[i] == correct_answer %}
+        <input class="form-check-input" disabled type="radio" name="question{{num}}" id="option{{i}}" value="{{answers[i]}}" />
+        <label class="form-check-label score correct" for="question{{num}}"> {{answers[i]}} </label>
+        <!--If it is not the user answer and it is incorrect-->
+        {% else %}
+        <input class="form-check-input" disabled type="radio" name="question{{num}}" id="option{{i}}" value="{{answers[i]}}" />
+        <label class="form-check-label score" for="question{{num}}"> {{answers[i]}} </label>
+        {% endif %}
 
-        <input class="form-check-input" type="radio" name="question{{num}}" id="option4" value="{{answers[3]}}" />
-        <label class="form-check-label" for="question{{num}}"> {{answers[3]}} </label>
+        <br />
+        <br />
+        {% endfor %}
     </div>
 </div>
 

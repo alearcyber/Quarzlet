@@ -60,15 +60,14 @@ def quiz():
     # Use the name to fetch the quiz data from the database
     # @TODO Randomize the order of the questions and answers
     # @DEBUG - Hardcoded quiz data
-    quiz_data = [{"question_num": 1, "question": "What is the best pokemon?", "answers": ["Pikachu", "Charizard", "Squirtle", "Jigglypuff"], "correct_answer": "Pikachu"},
-                 {"question_num": 2, "question": "What is 2 + 2?", "answers": ["4", "5", "6", "7"], "correct_answer": "4"},
-                 {"question_num": 3, "question": "Who invented the telephone?", "answers": ["Alexander Graham Bell", "Thomas Edison", "Nikola Tesla", "Albert Einstein"], "correct_answer": "Alexander Graham Bell"},
-                 {"question_num": 4, "question": "What color does red and blue make?", "answers": ["Purple", "Green", "Orange", "Yellow"], "correct_answer": "Purple"}]
+    quiz_data = [{"question_num": 0, "question": "What is the best pokemon?", "answers": ["Pikachu", "Charizard", "Squirtle", "Jigglypuff"], "correct_answer": "Pikachu"},
+                 {"question_num": 1, "question": "What is 2 + 2?", "answers": ["4", "5", "6", "7"], "correct_answer": "4"},
+                 {"question_num": 2, "question": "Who invented the telephone?", "answers": ["Alexander Graham Bell", "Thomas Edison", "Nikola Tesla", "Albert Einstein"], "correct_answer": "Alexander Graham Bell"},
+                 {"question_num": 3, "question": "What color does red and blue make?", "answers": ["Purple", "Green", "Orange", "Yellow"], "correct_answer": "Purple"}]
     
     # If it is not there, then redirect to quiz not found page.
     if not quiz_data:
         redirect(url_for("quiz_not_found"))
-    
     
     # Update current quiz name in session and render webpage
     session['quiz_data'] = quiz_data
@@ -82,8 +81,8 @@ def check_quiz():
     if request.method != 'POST':
         return render_template("quiz_not_found.html")
     
-    # Keeps track of the number of correct answers
-    correct_answers = []
+    user_answers = []
+    num_correct = 0
     
     # Fetch quiz data from session
     quiz_data = session['quiz_data']
@@ -92,12 +91,11 @@ def check_quiz():
     for question in quiz_data:
         question_num = question["question_num"]
         user_answer = request.form.get("question{}".format(question_num))
-        
-        if user_answer == question["correct_answer"]:
-            correct_answers.append(question_num)
+        user_answers.append(user_answer)
+        if user_answer == question["correct_answer"]: num_correct += 1
         
     # Pack data for results page
-    results = {"correct_answers": correct_answers, "quiz_data": quiz_data, "num_correct": len(correct_answers), "num_questions": len(quiz_data)}
+    results = {"user_answers": user_answers, "quiz_data": quiz_data, "num_correct": num_correct, "num_questions": len(quiz_data)}
     
     return render_template("results.html", results=results)
     

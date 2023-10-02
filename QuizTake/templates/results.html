@@ -3,23 +3,25 @@
 {% extends 'index.html' %} {% block css%}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='css/content.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/scored_quiz.css') }}" />
 {% endblock %} {% block quiz_content %}
 
 <div class="col-xl-10 ml-sm-auto px-4 content">
     <!--@bookmark Quiz Title and Score-->
     <div class="row">
-        <div class="col d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 100%; word-break: break-word">
-            <h1 class="h1 col">{{current_quiz}}</h1>
-            <div class="h2 col-1" style="font-size: 3rem"><sup>{{results.num_correct}}</sup>/<sub>{{results.num_questions}}</sub></div>
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 100%; word-break: break-word">
+            <h1 class="h1 col-11">{{current_quiz}}</h1>
+            <div class="h2 col" style="font-size: 3rem"><sup>{{results.num_correct}}</sup>/<sub>{{results.num_questions}}</sub></div>
         </div>
     </div>
 
-    <!--@bookmark Loaded Quiz-->
+    <!--@bookmark Scored Quiz-->
     <form class="row" id="quiz" action="/submit" method="POST" style="height: 2.5rem; font-size: 1rem; left: 20px">
         <!--Single Question-->
         <div class="col-xl">
             <div class="form-group">
-                {% for quiz in results.quiz_data %} {{macros.build_quiz_content(num=quiz.question_num, question=quiz.question, answers=quiz.answers)}} {% endfor %}
+                {% for i in range(0, results.num_questions) %} {{macros.score_quiz_content(num=results.quiz_data[i].question_num, question=results.quiz_data[i].question,
+                correct_answer=results.quiz_data[i].correct_answer, answers=results.quiz_data[i].answers, user_answer=results.user_answers[i])}} {% endfor %}
 
                 <br />
                 <br />
