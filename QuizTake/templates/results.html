@@ -16,7 +16,7 @@
     </div>
 
     <!--Scored Quiz-->
-    <form class="row" id="quiz" action="/submit" method="POST" style="height: 2.5rem; font-size: 1rem; left: 20px">
+    <form class="row" id="quiz" action="" method="POST" style="height: 2.5rem; font-size: 1rem; left: 20px">
         <!--Single Question-->
         <div class="col-xl">
             <div class="form-group">
@@ -26,7 +26,7 @@
                 <br />
                 <br />
                 <div class="form-row d-flex justify-content-end px-5 py-5">
-                    <button type="submit" class="btn btn-outline-secondary" style="width: 20rem; height: 3rem; font-size: 1.5rem; left: 28px">Submit</button>
+                    <a href="/quiz?quiz={{current_quiz}}" class="btn btn-outline-secondary" style="width: 20rem; height: 3rem; font-size: 1.5rem; left: 28px">Reset</a>
                 </div>
             </div>
         </div>
