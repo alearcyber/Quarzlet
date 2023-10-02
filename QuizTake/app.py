@@ -16,14 +16,19 @@
 ###################################################################
 
 # Imports
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, session
 import random
+import configparser
+
+config = configparser.ConfigParser()
+config.read(r'config/flask.ini')
 
 app = Flask(__name__)
-
+app.secret_key = config['credentials']['secret']
 
 def generate_quiz_list():
     # Make database query for all quiz titles
+    # @DEBUG - Hardcoded quiz data
     quiz_titles = ["Pikachu"*20, "Charizard", "Squirtle", "Jigglypuff",
                    "Bulbasaur", "Gengar", "Charmander", "Mew", "Lugia", "Gyarados"]
     quiz_titles += quiz_titles
@@ -33,8 +38,10 @@ def generate_quiz_list():
     for title in quiz_titles:
         quiz_urls.append({"name": title, "url": url_for("quiz", quiz=title)})
     quizzes_len = len(quiz_urls)
-        
-    app.jinja_env.globals.update(quizzes=quiz_urls, quizzes_len=quizzes_len, current_quiz="")
+    
+    session['current_quiz'] = ""
+    
+    app.jinja_env.globals.update(quizzes=quiz_urls, quizzes_len=quizzes_len, current_quiz=session['current_quiz'])
 
 
 @app.route("/")
@@ -52,29 +59,54 @@ def quiz():
     
     # Use the name to fetch the quiz data from the database
     # @TODO Randomize the order of the questions and answers
-    quiz_data = [{"question_num": 1, "question": "What is the best pokemon?", "answers": ["Pikachu", "Charizard", "Squirtle", "Jigglypuff"]},
-                 {"question_num": 2, "question": "What is 2 + 2?", "answers": ["4", "5", "6", "7"]},
-                 {"question_num": 3, "question": "Who invented the telephone?", "answers": ["Alexander Graham Bell", "Thomas Edison", "Nikola Tesla", "Albert Einstein"]},
-                 {"question_num": 4, "question": "What color does red and blue make?", "answers": ["Purple", "Green", "Orange", "Yellow"]}]
+    # @DEBUG - Hardcoded quiz data
+    quiz_data = [{"question_num": 1, "question": "What is the best pokemon?", "answers": ["Pikachu", "Charizard", "Squirtle", "Jigglypuff"], "correct_answer": "Pikachu"},
+                 {"question_num": 2, "question": "What is 2 + 2?", "answers": ["4", "5", "6", "7"], "correct_answer": "4"},
+                 {"question_num": 3, "question": "Who invented the telephone?", "answers": ["Alexander Graham Bell", "Thomas Edison", "Nikola Tesla", "Albert Einstein"], "correct_answer": "Alexander Graham Bell"},
+                 {"question_num": 4, "question": "What color does red and blue make?", "answers": ["Purple", "Green", "Orange", "Yellow"], "correct_answer": "Purple"}]
     
     # If it is not there, then redirect to quiz not found page.
     if not quiz_data:
-        return quiz_not_found()
+        redirect(url_for("quiz_not_found"))
+    
     
     # Update current quiz name in session and render webpage
-    app.jinja_env.globals.update(current_quiz=quiz_name)
+    session['quiz_data'] = quiz_data
+    session['current_quiz'] = quiz_name
+    app.jinja_env.globals.update(current_quiz=session['current_quiz'])
     return render_template("quiz.html", quiz_data=quiz_data)
+
 
 @app.route("/submit", methods=["POST"])
 def check_quiz():
     if request.method != 'POST':
         return render_template("quiz_not_found.html")
     
-    # 
+    # Keeps track of the number of correct answers
+    correct_answers = []
+    
+    # Fetch quiz data from session
+    quiz_data = session['quiz_data']
+    
+    # Check user answers against correct answers
+    for question in quiz_data:
+        question_num = question["question_num"]
+        user_answer = request.form.get("question{}".format(question_num))
+        
+        if user_answer == question["correct_answer"]:
+            correct_answers.append(question_num)
+        
+    # Pack data for results page
+    results = {"correct_answers": correct_answers, "quiz_data": quiz_data, "num_correct": len(correct_answers), "num_questions": len(quiz_data)}
+    
+    return render_template("results.html", results=results)
+    
+    
         
 
-
+@app.route("/quiz_not_found")
 def quiz_not_found():
     # Update current quiz name in session and render webpage
-    app.jinja_env.globals.update(current_quiz="")
+    session['current_quiz'] = ""
+    app.jinja_env.globals.update(current_quiz=session['current_quiz'])
     return render_template("quiz_not_found.html")
