@@ -33,7 +33,8 @@ def init_flask_config():
     config.read(r'config/flask.ini')
 
     if len(config['credentials']['secret']) < 64:
-        raise Exception("Please change the secret key to a cryptographically secure value in config/flask.ini before running the server.")
+        raise Exception("Please change the secret key to a cryptographically secure value in config/flask.ini before running the server.\n"
+                        + "A 64-character random string is required. One can be generated in the Python REPL with secrets.token_urlsafe(64).")
     
     return config['credentials']['secret']
     
