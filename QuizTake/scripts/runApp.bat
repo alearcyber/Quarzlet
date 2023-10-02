@@ -1,5 +1,7 @@
 @ECHO OFF
 
+cd ..
+
 set FLASK_APP=app:app
 set /A WORKERS=2
 
@@ -17,3 +19,5 @@ if %argC%==0 (
 
 echo "waitress-serve --threads=%WORKERS% --listen=%BIND% %FLASK_APP%"
 waitress-serve --threads=%WORKERS% --listen=%BIND% %FLASK_APP%
+
+cd %~dp0

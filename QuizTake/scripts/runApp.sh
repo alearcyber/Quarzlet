@@ -1,5 +1,9 @@
 #!/bin/bash
 
+
+SCRIPT_DIR=$(pwd)
+cd ..
+
 FLASK_APP="app:app"
 WORKERS=2
 
@@ -13,3 +17,5 @@ fi
 
 echo "gunicorn -w $WORKERS -b $BIND $FLASK_APP"
 gunicorn -w $WORKERS -b $BIND $FLASK_APP
+
+cd $SCRIPT_DIR
