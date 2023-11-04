@@ -53,12 +53,15 @@ app.secret_key = init_flask_config()
 def generate_quiz_list():
     # Create quiz list for sidebar
     response = requests.get("http://quarzlet-store:8002/available")
-    data = response.json()
-    print(data)
-    quiz_titles = ["Pokemon", "Math", "History", "Colors"]
-    quiz_urls = []
+    data = response.json()['quizzes']
+
+    # Gather all the quiz titles
+    quiz_titles = []
+    for quiz in data:
+        quiz_titles.append(quiz['name'])
 
     # Assign a url for every quiz title
+    quiz_urls = []
     for title in quiz_titles:
         quiz_urls.append({"name": title, "url": url_for("quiz", quiz=title)})
     quizzes_len = len(quiz_urls)
@@ -87,14 +90,26 @@ def quiz():
     quiz_name = request.args.get("quiz")
 
     # Use the name to fetch the quiz data from the database
-    # @TODO Randomize the order of the questions and answers
-    # @DEBUG - Hardcoded quiz data
-    quiz_data = [{"question_num": 0, "question": "What is the best pokemon?", "answers": ["Pikachu", "Charizard", "Squirtle", "Jigglypuff"], "correct_answer": "Pikachu"},
-                 {"question_num": 1, "question": "What is 2 + 2?",
-                     "answers": ["4", "5", "6", "7"], "correct_answer": "4"},
-                 {"question_num": 2, "question": "Who invented the telephone?", "answers": [
-                     "Alexander Graham Bell", "Thomas Edison", "Nikola Tesla", "Albert Einstein"], "correct_answer": "Alexander Graham Bell"},
-                 {"question_num": 3, "question": "What color does red and blue make?", "answers": ["Purple", "Green", "Orange", "Yellow"], "correct_answer": "Purple"}]
+    url = "http://quarzlet-store:8002/getquiz"
+    payload = {"name": quiz_name}
+    response = requests.get(url=url, json=payload)
+
+    # Check if the response was successful, if not, send to quiz_not_found page
+    if response.status_code != 200:
+        redirect(url_for("quiz_not_found"))
+
+    # Get the quiz data from the response
+    try:
+        data = response.json()['quiz']
+    except:
+        redirect(url_for("quiz_not_found"))
+
+    quiz_data = []
+    for i, question in enumerate(data, start=0):
+        quiz_data.append({'question_num': i,
+                          'question': question['question'],
+                          'correct_answer': question['correctanswer'],
+                          'answers': [question['correctanswer']] + question['badanswers']})
 
     # If it is not there, then redirect to quiz not found page.
     if not quiz_data:
