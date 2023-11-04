@@ -14,8 +14,9 @@ DB_PATH = "db"
 
 @app.route('/')
 def testpage():
-    out = available_quizzes()
-    return jsonify(out)
+    #out = available_quizzes()
+    #return jsonify(out)
+    return "hello"
 
 ################################################################################################
 # ROUTES
@@ -85,11 +86,12 @@ def addquiz():
     return jsonify({"status": 1, "Message": "Quiz Was Successfully Added"})
 
 
-#retrieves the available quizzes
+# retrieves the available quizzes and sends them back to the client.
+# Expects a GET request with no body.
 # TODO - IMPLEMENT THIS
-@app.route('/available', methods=['POST'])
+@app.route('/available', methods=['GET'])
 def available():
-    return None
+    return jsonify(available_quizzes())
 
 
 
@@ -185,7 +187,7 @@ def add_new_quiz(data):
 
 
 ##########################################################################################
-# What quizzes are available for the database
+# What quizzes are available from the database
 ##########################################################################################
 def available_quizzes():
     q = """
