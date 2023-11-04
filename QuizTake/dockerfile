@@ -1,5 +1,9 @@
 #grab python-linux image
-FROM python:3.10-alpine
+FROM ubuntu:latest
+
+# Install python
+RUN apt-get update -y
+RUN apt-get install -y python3.10 python3-pip
 
 # set environment variables
 ENV PORT 8000
@@ -17,12 +21,14 @@ RUN pip install -r requirements.txt
 COPY app.py /app
 COPY templates/ /app/templates
 COPY static/ /app/static
-COPY scripts/runApp.sh /app/scripts
-COPY config/flask.ini /app/config
+COPY scripts/runApp.sh /app/scripts/runApp.sh
+COPY config/flask.ini /app/config/flask.ini
 
 # configure the container to run in an executed manner
 #ENTRYPOINT [ "bash" ]
 EXPOSE $PORT
 
+RUN chmod +x /app/scripts/runApp.sh
+
 # parameter for the "ENTRYPOINT" above. Basically makes it run the application.
-CMD ["/app/scripts/runApp.sh"]
+CMD ["/bin/bash", "-c", "/app/scripts/runApp.sh"]
