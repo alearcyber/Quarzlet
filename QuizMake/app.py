@@ -1,4 +1,4 @@
-
+import os
 from flask import Flask, render_template, redirect, request, url_for, session
 
 app = Flask(__name__)
@@ -9,30 +9,34 @@ quiz_data = {
     'questions': []
 }
 
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
 
     if request.method == 'POST':
         quiz_data['quiz_name'] = request.form.get('quiztitle')
         form_data = {
-            'question':request.form.get('question'),
-            'optionA':request.form.get('optionA'),
-            'optionB':request.form.get('optionB'),
-            'optionC':request.form.get('optionC'),
-            'optionD':request.form.get('optionD'),
-            'answer':request.form.get(request.form['correct'])
+            'question': request.form.get('question'),
+            'optionA': request.form.get('optionA'),
+            'optionB': request.form.get('optionB'),
+            'optionC': request.form.get('optionC'),
+            'optionD': request.form.get('optionD'),
+            'answer': request.form.get(request.form['correct'])
         }
-            
+
         quiz_data['questions'].append(form_data)
 
-    return render_template("index.html", quiz_data=quiz_data)   
+    return render_template("index.html", quiz_data=quiz_data)
+
 
 @app.route('/congrats', methods=['GET', 'POST'])
 def submitQuiz():
     if request.method == 'POST':
         if 'createQuiz' in request.form:
             session.clear()
-            return render_template("congrats.html")    
+            return render_template("congrats.html")
+
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 8001))
+    app.run(host='0.0.0.0', port=port)

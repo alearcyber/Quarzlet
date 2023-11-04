@@ -3,7 +3,6 @@
 
 SCRIPT_DIR=$(pwd)
 cd /app
-echo "Running from $(pwd)"
 
 FLASK_APP="app:app"
 HOST=0.0.0.0

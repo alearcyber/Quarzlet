@@ -52,7 +52,7 @@ app.secret_key = init_flask_config()
 # App Functions
 def generate_quiz_list():
     # Create quiz list for sidebar
-    response = requests.get("http://quarzlet-store-cont/available")
+    response = requests.get("http://quarzlet-store:8002/available")
     data = response.json()
     print(data)
     quiz_titles = ["Pokemon", "Math", "History", "Colors"]
