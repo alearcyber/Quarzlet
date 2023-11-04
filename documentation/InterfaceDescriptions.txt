@@ -1,0 +1,5 @@
+Note on what different HTTP requests are used for
+    - GET: Get resource from the server.
+    - POST: Create resource to the server.
+    - PATCH or PUT: Update existing resource on the server.
+    - DELETE: Delete existing resource from the server.
