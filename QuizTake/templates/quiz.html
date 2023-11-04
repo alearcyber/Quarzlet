@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+{% extends 'index.html' %} {% block css%}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/content.css') }}" />
+{% endblock %} {% block quiz_content %}
+
+<div class="col-xl-10 ml-sm-auto px-4 content">
+    <!--Quiz Title-->
+    <div class="row">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" style="width: 100%; word-break: break-word">
+            <h1 class="h1">{{current_quiz}}</h1>
+        </div>
+    </div>
+
+    <!--Loaded Quiz-->
+    <form class="row" id="quiz" action="/submit" method="POST" style="height: 2.5rem; font-size: 1rem; left: 20px">
+        <!--Single Question-->
+        <div class="col-xl">
+            <div class="form-group">
+                {% for quiz in quiz_data %} {{macros.build_quiz_content(num=quiz.question_num, question=quiz.question, answers=quiz.answers)}} {% endfor %}
+
+                <br />
+                <br />
+                <div class="form-row d-flex justify-content-end px-5 py-5">
+                    <button type="submit" class="btn btn-outline-secondary" style="width: 20rem; height: 3rem; font-size: 1.5rem; left: 28px">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

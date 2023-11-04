@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+{% import "macros.html" as macros %} {% extends 'base.html' %} {% block css%}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}" />
+{% endblock %} {% block content %}
+
+<div class="row no-gutters" style="height: 92vh">
+    <!--Sidebar-->
+    <div class="col-md-2 d-none d-md-block bg-light sidebar">
+        <ul class="nav flex-column">
+            <!--Sidebar Heading-->
+            <h6 class="sidebar-heading d-flex px-3 mt-4 mb-1">
+                <span>Select Quiz</span>
+            </h6>
+            <!--Quiz List-->
+            <!--Macros defined in Macros.html-->
+            {{macros.build_quiz_list(quizzes=quizzes, quizzes_len=quizzes_len, selected=current_quiz)}}
+        </ul>
+    </div>
+
+    <!--Main Content-->
+    <!--Block gets overidden by quiz.html-->
+    {% block quiz_content %}
+    <div class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Welcome!</h1>
+        </div>
+        <p>Select a quiz from the left panel.</p>
+    </div>
+    {% endblock %}
+</div>
+
+{% endblock %}
