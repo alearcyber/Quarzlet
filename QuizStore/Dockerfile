@@ -7,6 +7,9 @@ FROM python:3.10-alpine
 #move requirements into the image
 COPY ./requirements.txt /app/requirements.txt
 
+# set environment variables
+ENV PORT 8002
+
 # switch working directory
 WORKDIR /app
 
@@ -17,6 +20,9 @@ RUN pip install -r requirements.txt
 COPY db /app
 COPY testdata.py /app
 COPY app.py /app
+
+# Expose port 8002
+EXPOSE $PORT
 
 # configure the container to run in an executed manner
 ENTRYPOINT [ "python" ]
