@@ -35,4 +35,4 @@ def submitQuiz():
             return render_template("congrats.html")    
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=8001)

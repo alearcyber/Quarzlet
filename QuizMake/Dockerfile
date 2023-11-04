@@ -4,6 +4,9 @@
 #grab python image
 FROM python:3.10-alpine
 
+# create an environment variable
+ENV PORT 8001
+
 #move requirements into the image
 COPY ./requirements.txt /app/requirements.txt
 
@@ -18,6 +21,9 @@ COPY app.py /app
 COPY templates/ /app/templates
 COPY static/ /app/static
 COPY app.py /app
+
+# listen to the port
+EXPOSE ${PORT}
 
 # configure the container to run in an executed manner
 ENTRYPOINT [ "python" ]
