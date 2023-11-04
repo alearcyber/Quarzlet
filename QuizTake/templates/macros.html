@@ -38,7 +38,7 @@
 <!--Macro Quiz Score-->
 {% macro score_quiz_content(num, question, correct_answer, answers, user_answer) %}
 <!--Question-->
-<div class="form-row border-bottom {% if user_answer == correct_answer %}correct{% else %}incorrect{% endif %}" style="width: 100%; word-break: break-word">
+<div class="form-row border-bottom " style="width: 100%; word-break: break-word">
     <label for="question{{num}}" style="font-size: 30px; margin-top: 1rem">{{num+1}}) {{question}}</label>
 </div>
 <br />
