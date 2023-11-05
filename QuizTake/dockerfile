@@ -1,4 +1,4 @@
-#grab python-linux image
+# grab OS image
 FROM ubuntu:latest
 
 # Install python
@@ -8,27 +8,27 @@ RUN apt-get install -y python3.10 python3-pip
 # set environment variables
 ENV PORT 8000
 
-#move requirements into the image
-COPY ./requirements.txt /app/requirements.txt
-
 # switch working directory
 WORKDIR /app
+
+# move requirements into the image
+COPY ./requirements.txt /app/requirements.txt
+
 
 # install the dependencies and packages in the requirements file
 RUN pip install -r requirements.txt
 
-#copy necessary files
+# copy necessary files
 COPY app.py /app
 COPY templates/ /app/templates
 COPY static/ /app/static
 COPY scripts/runApp.sh /app/scripts/runApp.sh
 COPY config/flask.ini /app/config/flask.ini
 
-# configure the container to run in an executed manner
-#ENTRYPOINT [ "bash" ]
+# expose port
 EXPOSE $PORT
 
 RUN chmod +x /app/scripts/runApp.sh
 
-# parameter for the "ENTRYPOINT" above. Basically makes it run the application.
+# Run application
 CMD ["/bin/bash", "-c", "/app/scripts/runApp.sh"]

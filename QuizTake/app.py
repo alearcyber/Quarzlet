@@ -49,9 +49,13 @@ app = Flask(__name__)
 app.secret_key = init_flask_config()
 
 
-# App Functions
-def generate_quiz_list():
-    # Create quiz list for sidebar
+###################################################################
+# Functions
+###################################################################
+def query_quiz_list():
+    # Queries the quiz list from the QuizStore service and stores it in the session variables
+    
+    # Queries quiz list for sidebar
     response = requests.get("http://quarzlet-store:8002/available")
     data = response.json()['quizzes']
 
@@ -64,36 +68,49 @@ def generate_quiz_list():
     quiz_urls = []
     for title in quiz_titles:
         quiz_urls.append({"name": title, "url": url_for("quiz", quiz=title)})
-    quizzes_len = len(quiz_urls)
 
-    # Set the user's current quiz to empty
+    # Set the user's session data
+    session['quizzes'] = quiz_urls
+    session['quizzes_len'] = len(quiz_urls)
     session['current_quiz'] = ""
 
+def refresh_global_variables():
+    # Refreshes the global variables for the quiz list and the current quiz.
+    
+    # Check if the session variables are initialized, if not, query the quiz list
+    if not ('quizzes' in session and 'quizzes_len' in session and 'current_quiz' in session):
+        query_quiz_list()
+    
     # Update the global variables for the quiz list and the current quiz.
     # quizzes_len is used by the Jinja syntax to determine if the quiz list is empty or not.
     app.jinja_env.globals.update(
-        quizzes=quiz_urls, quizzes_len=quizzes_len, current_quiz=session['current_quiz'])
+        quizzes=session['quizzes'], quizzes_len=session['quizzes_len'], current_quiz=session['current_quiz'])
 
 
+
+###################################################################
+# App Routes
+###################################################################
 @app.route("/")
 def index():
     # Landing page for the app
 
     # Quiz list for sidebar
-    generate_quiz_list()
-
+    refresh_global_variables()
+    
     return render_template("index.html")
 
 
 @app.route("/quiz")
 def quiz():
     # Recalcuate the quiz list because for some reason the global variables are not getting preserved
-    generate_quiz_list()
+    refresh_global_variables()
     
     # Get the quiz name
     quiz_name = request.args.get("quiz")
 
     # Use the name to fetch the quiz data from the database
+    
     url = "http://quarzlet-store:8002/getquiz"
     payload = {"name": quiz_name}
     response = requests.get(url=url, json=payload)
@@ -135,7 +152,7 @@ def quiz():
 
 
 @app.route("/submit", methods=["POST"])
-def check_quiz():
+def grade_quiz():
     if request.method != 'POST':
         return render_template("quiz_not_found.html")
 

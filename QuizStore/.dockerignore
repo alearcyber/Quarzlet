@@ -1,0 +1,8 @@
+.vscode
+**/__pycache__/
+**/logs/**
+**.logs
+flask.ini
+.idea/
+documentation/
+quiz-examples/
