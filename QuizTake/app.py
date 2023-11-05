@@ -104,12 +104,16 @@ def quiz():
     except:
         redirect(url_for("quiz_not_found"))
 
+    # Collect quiz data into format for html pages
     quiz_data = []
     for i, question in enumerate(data, start=0):
+        # Randomize order of answers
+        answers = [question['correctanswer']] + question['badanswers']
+        random.shuffle(answers)
         quiz_data.append({'question_num': i,
                           'question': question['question'],
                           'correct_answer': question['correctanswer'],
-                          'answers': [question['correctanswer']] + question['badanswers']})
+                          'answers': answers})
 
     # If it is not there, then redirect to quiz not found page.
     if not quiz_data:
