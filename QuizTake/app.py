@@ -69,7 +69,8 @@ def generate_quiz_list():
     # Set the user's current quiz to empty
     session['current_quiz'] = ""
 
-    # Update the global variables for the quiz list and the current quiz. quizzes_len is used by the Jinja syntax to determine if the quiz list is empty or not.
+    # Update the global variables for the quiz list and the current quiz.
+    # quizzes_len is used by the Jinja syntax to determine if the quiz list is empty or not.
     app.jinja_env.globals.update(
         quizzes=quiz_urls, quizzes_len=quizzes_len, current_quiz=session['current_quiz'])
 
@@ -86,6 +87,9 @@ def index():
 
 @app.route("/quiz")
 def quiz():
+    # Recalcuate the quiz list because for some reason the global variables are not getting preserved
+    generate_quiz_list()
+    
     # Get the quiz name
     quiz_name = request.args.get("quiz")
 
@@ -96,28 +100,32 @@ def quiz():
 
     # Check if the response was successful, if not, send to quiz_not_found page
     if response.status_code != 200:
-        redirect(url_for("quiz_not_found"))
+        return redirect(url_for("quiz_not_found"))
 
     # Get the quiz data from the response
     try:
         data = response.json()['quiz']
     except:
-        redirect(url_for("quiz_not_found"))
+        return redirect(url_for("quiz_not_found"))
 
     # Collect quiz data into format for html pages
     quiz_data = []
     for i, question in enumerate(data, start=0):
-        # Randomize order of answers
+        # Correct answer must be appended to bad answers
         answers = [question['correctanswer']] + question['badanswers']
+        
+        # Randomize order of answers
         random.shuffle(answers)
+        
+        # Append question to quiz data
         quiz_data.append({'question_num': i,
                           'question': question['question'],
                           'correct_answer': question['correctanswer'],
                           'answers': answers})
 
-    # If it is not there, then redirect to quiz not found page.
+    # If no questions were collected, then redirect to quiz not found page.
     if not quiz_data:
-        redirect(url_for("quiz_not_found"))
+        return redirect(url_for("quiz_not_found"))
 
     # Update current quiz name in session and render webpage
     session['quiz_data'] = quiz_data
