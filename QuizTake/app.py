@@ -109,9 +109,12 @@ def quiz():
     
     # Get the quiz name
     quiz_name = request.args.get("quiz")
+    
+    # First, check if the current quiz is already in session
+    if 'current_quiz' in session and session['current_quiz'] == quiz_name:
+        return render_template("quiz.html", quiz_data=session['quiz_data'])
 
     # Use the name to fetch the quiz data from the database
-    
     url = "http://quarzlet-store:8002/getquiz"
     payload = {"name": quiz_name}
     response = requests.get(url=url, json=payload)

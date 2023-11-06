@@ -24,8 +24,6 @@
                 {% for i in range(0, results.num_questions) %} {{macros.score_quiz_content(num=results.quiz_data[i].question_num, question=results.quiz_data[i].question,
                 correct_answer=results.quiz_data[i].correct_answer, answers=results.quiz_data[i].answers, user_answer=results.user_answers[i])}} {% endfor %}
 
-                <br />
-                <br />
                 <div class="form-row d-flex justify-content-end px-5 py-5">
                     <a href="/quiz?quiz={{current_quiz}}" class="btn btn-outline-secondary" style="width: 20rem; height: 3rem; font-size: 1.5rem; left: 28px">Reset</a>
                 </div>
