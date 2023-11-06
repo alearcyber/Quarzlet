@@ -1,0 +1,76 @@
+:root {
+    --form-control-color: #0c70db;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+.form-control {
+    font-size: 1.1rem;
+    justify-content: left;
+    line-height: 1.1;
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 0.5em;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    cursor: pointer;
+}
+
+.form-control:hover {
+    background-color: aliceblue;
+}
+
+input[type="radio"] {
+    margin: 0;
+    color: currentColor;
+    width: 1.15em;
+    height: 1.15em;
+    border: 0.15em solid currentColor;
+    border-radius: 50%;
+    transform: translateY(-0.075em);
+    display: grid;
+    place-content: center;
+}
+
+input[type="radio"]::before {
+    content: "";
+    width: 0.85em;
+    height: 0.85em;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: 0.8s transform ease;
+    box-shadow: inset 1em 1em var(--form-control-color);
+}
+
+input[type="radio"]:checked::before {
+    transform: scale(1);
+}
+
+input[type="radio"]:disabled {
+    opacity: 0.5;
+}
+
+.form-control:focus-within {
+    color: var(--form-control-color);
+}
+
+.form-control + .form-control {
+    margin-top: 2em;
+}
+
+.trash-button-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    scale: 0.9;
+    transition: transform 0.2s ease;
+}
+
+.trash-button-img:hover {
+    background-color: #da8383;
+    transform: scale(1.2);
+}

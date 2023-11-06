@@ -177,6 +177,19 @@ def grade_quiz():
     return render_template("results.html", results=results)
 
 
+@app.route("/deletequiz")
+def delete_quiz():
+    # Delete button pressed, send request to QuizStore to delete quiz
+    url = "http://quarzlet-store:8002/deletequiz"
+    payload = {"name": session['current_quiz']}
+    response = requests.post(url=url, json=payload)
+    
+    # Clear session so that the quiz list gets refreshed
+    session.clear()
+    
+    return redirect(url_for("index"))
+
+
 @app.route("/quiz_not_found")
 def quiz_not_found():
     # Update current quiz name in session and render webpage

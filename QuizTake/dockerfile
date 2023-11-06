@@ -31,5 +31,4 @@ EXPOSE $PORT
 RUN chmod +x /app/scripts/runApp.sh
 
 # Run application
-#CMD ["/bin/bash", "-c", "/app/scripts/runApp.sh"]
-CMD ["/bin/bash", "-c", "sleep 100"]
+CMD ["/bin/bash", "-c", "/app/scripts/runApp.sh"]

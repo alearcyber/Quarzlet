@@ -12,7 +12,7 @@ WORKERS=2
 
 # Check if there are any arguments
 # Set default values if not
-if [[ $ARGC==0 ]] then
+if [[ $ARGC==0 ]]; then
     BIND=$HOST:$PORT
 else
     BIND=$1

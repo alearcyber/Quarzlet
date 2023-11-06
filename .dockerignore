@@ -6,3 +6,4 @@ flask.ini
 .idea/
 documentation/
 quiz-examples/
+app-test.py
