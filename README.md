@@ -11,7 +11,6 @@ The Quarzlet cloud application allows users to create their own multiple choice 
   - [Run](#run)
   - [Credits](#credits)
 
-
 ## Services  
 
 - QuizTake: Entry point for the product. Allows user to select and take a quiz. The quiz gets scored and the results are presented to the user. Allows user to delete quizzes.
@@ -41,11 +40,11 @@ Run the following python script in the project's root directory:
 
 To run the application, run the following:  
 
-``  
+`docker compose -f "docker-compose.yaml" up -d --build`  
 
 To stop the application, run the following:
 
-``  
+`docker compose -f "compose.yaml" down`  
 
 Once the containers are running, you can access the site from the url  
 [http://127.0.0.1:8000](http://127.0.0.1:8000)
