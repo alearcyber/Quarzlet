@@ -96,6 +96,7 @@ def index():
     # Landing page for the app
 
     # Quiz list for sidebar
+    session.clear()
     refresh_global_variables()
     
     return render_template("index.html")
@@ -183,9 +184,6 @@ def delete_quiz():
     url = "http://quarzlet-store:8002/deletequiz"
     payload = {"name": session['current_quiz']}
     response = requests.post(url=url, json=payload)
-    
-    # Clear session so that the quiz list gets refreshed
-    session.clear()
     
     return redirect(url_for("index"))
 
