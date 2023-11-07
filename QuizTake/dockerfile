@@ -3,7 +3,7 @@ FROM ubuntu:latest
 
 # Install python
 RUN apt-get update -y
-RUN apt-get install -y python3.10 python3-pip
+RUN apt-get install -y python3.10 python3-pip dos2unix
 
 # set environment variables
 ENV PORT 8000
@@ -28,6 +28,7 @@ COPY config/flask.ini /app/config/flask.ini
 # expose port
 EXPOSE $PORT
 
+RUN dos2unix /app/scripts/runApp.sh
 RUN chmod +x /app/scripts/runApp.sh
 
 # Run application
