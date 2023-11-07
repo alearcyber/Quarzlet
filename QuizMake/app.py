@@ -1,39 +1,76 @@
 import os
 from flask import Flask, render_template, redirect, request, url_for, session
+import requests
 
 app = Flask(__name__)
-app.secret_key = 'myKey'
 
 quiz_data = {
-    'quiz_name': '',
-    'questions': []
+    'name': '',
+    'description': '',
+    'quiz': []
 }
 
+app.jinja_env.globals['quiz_data'] = quiz_data
 
+# Handles resetting the data
+def reset():
+    quiz_data['name'] = ''
+    quiz_data['description'] = ''
+    quiz_data['quiz'] = []
+
+    app.jinja_env.globals.update(quiz_data=quiz_data)
+
+
+#################################################################################################
+# APP ROUTES
+#################################################################################################
+
+# Initial page
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    return render_template("index.html")
 
-    if request.method == 'POST':
-        quiz_data['quiz_name'] = request.form.get('quiztitle')
-        form_data = {
-            'question': request.form.get('question'),
-            'optionA': request.form.get('optionA'),
-            'optionB': request.form.get('optionB'),
-            'optionC': request.form.get('optionC'),
-            'optionD': request.form.get('optionD'),
-            'answer': request.form.get(request.form['correct'])
-        }
+# Handles form submission from the user and redirects
+@app.route('/update', methods=['POST'])
+def updateData():
+    if request.method != 'POST':
+        return redirect(url_for('index'))
+    
+    if not(len(quiz_data['name']) > 0 and len(quiz_data['description']) > 0):
+        quiz_data['name'] = request.form.get('quiztitle')
+        quiz_data['description'] = request.form.get('quizdescription')
+    
+    form_data = {
+        'question': request.form.get('question'),
+        'correctanswer': request.form.get(request.form['correct']),
+        'badanswers': [],
+        'answerChoices': [request.form.get('optionA'), request.form.get('optionB'), request.form.get('optionC'), request.form.get('optionD')]
+    }
 
-        quiz_data['questions'].append(form_data)
+    for answer in form_data['answerChoices']:
+        if answer != form_data['correctanswer']:
+            form_data['badanswers'].append(answer)
 
-    return render_template("index.html", quiz_data=quiz_data)
+    quiz_data['quiz'].append(form_data)
 
+    app.jinja_env.globals.update(quiz_data=quiz_data)
 
+    return redirect(url_for('index'))
+    
+# Sends the data to the QuizStore and redirects to the main page
 @app.route('/congrats', methods=['GET', 'POST'])
 def submitQuiz():
     if request.method == 'POST':
         if 'createQuiz' in request.form:
-            session.clear()
+
+            for i in range(len(quiz_data['quiz'])):
+                quiz_data['quiz'][i].pop('answerChoices')
+
+            url = "http://quarzlet-store:8002/addquiz"
+            response = requests.post(url, json=quiz_data)
+
+            reset()
+            
             return render_template("congrats.html")
 
 
