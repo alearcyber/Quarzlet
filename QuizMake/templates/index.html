@@ -11,21 +11,35 @@
             </div>
         </div>
     </div>
-    <div class="row my-2 justify-content-center align-items-center">
-        <div class="col-md-9">
-            <div class="shadow-sm p-4 rounded bg-white">
-                <form method="post" action="/">
-                    <div class="form-inline">
-                        <label for="quiztitle" class="mb-2">Quiz Title:</label>
-                        <input type="text" name="quiztitle" class="form-control ml-4 mb-2 flex-grow-1 bg-light" placeholder="Enter the title of the quiz" value>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
-    {% if quiz_data['questions']|length > 0 %}
-        {% for question in quiz_data['questions'] %}
+    {% if quiz_data['name'] %} 
+        <div class="row my-2 justify-content-center align-items-center">
+            <div class="col-md-9">
+                <div class="shadow-sm p-4 rounded bg-white">
+                    <div class="form-inline">
+                        <p class="mb-2">Quiz title:</p> 
+                        <p class="border rounded p-2 bg-light ml-4 mb-2 flex-grow-1"> {{ quiz_data['name'] }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>                
+    {% endif %}
+
+    {% if quiz_data['description'] %} 
+        <div class="row my-2 justify-content-center align-items-center">
+            <div class="col-md-9">
+                <div class="shadow-sm p-4 rounded bg-white">
+                    <div class="form-inline">
+                        <p class="mb-2">Quiz title:</p> 
+                        <p class="border rounded p-2 bg-light ml-4 mb-2 flex-grow-1"> {{ quiz_data['description'] }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>            
+    {% endif %}
+
+    {% if quiz_data['quiz']|length > 0 %}
+        {% for question in quiz_data['quiz'] %}
         <div class="row my-2 justify-content-center align-items-center">
             <div class="col-md-9">
                 <div class="shadow-sm p-4 rounded bg-white">
@@ -34,35 +48,63 @@
                         <p class="mb-2">Question {{ loop.index }}</p> 
                         <p class="border rounded p-2 bg-light ml-3 mb-2 flex-grow-1"> {{ question['question'] }}</p>
                     </div>
+
+                    {% for i in range(4) %}
+                        <div class="form-inline">
+                            <input type="radio" class="ml-5 mr-3" {% if question['correctanswer'] == question['answerChoices'][i] %} checked disabled {% else %} disabled {% endif %}>
+                            <p class="border rounded p-2 bg-light ml-3 mb-2 flex-grow-1">{{ question['answerChoices'][i] }}</p>
+                        </div>
+                    {% endfor %}    
+                    <!--
                     <div class="form-inline">
-                        <input type="radio" class="ml-5 mr-3" {% if question['answer'] == question['optionA'] %} checked disabled {% else %} disabled {% endif %}>
-                        <p class="border rounded p-2 bg-light ml-3 mb-2 flex-grow-1">{{ question['optionA'] }}</p>
+                        <input type="radio" class="ml-5 mr-3" {% if question['correctanswer'] == question['answerChoices'][1] %} checked disabled {% else %} disabled {% endif %}>
+                        <p class="border rounded p-2 bg-light ml-3 mb-2 flex-grow-1">{{ question['answerChoices'][1] }}</p>
                     </div>
                     <div class="form-inline">
-                        <input type="radio" class="ml-5 mr-3" {% if question['answer'] == question['optionB'] %} checked disabled {% else %} disabled {% endif %}>
-                        <p class="border rounded p-2 bg-light ml-3 mb-2 flex-grow-1">{{ question['optionB'] }}</p>
+                        <input type="radio" class="ml-5 mr-3" {% if question['correctanswer'] == question['answerChoices'][2] %} checked disabled {% else %} disabled {% endif %}>
+                        <p class="border rounded p-2 bg-light ml-3 mb-2 flex-grow-1">{{ question['answerChoices'][2] }}</p>
                     </div>
                     <div class="form-inline">
-                        <input type="radio" class="ml-5 mr-3" {% if question['answer'] == question['optionC'] %} checked disabled {% else %} disabled {% endif %}>
-                        <p class="border rounded p-2 bg-light ml-3 mb-2 flex-grow-1">{{ question['optionC'] }}</p>
+                        <input type="radio" class="ml-5 mr-3" {% if question['correctanswer'] == question['answerChoices'][3] %} checked disabled {% else %} disabled {% endif %}>
+                        <p class="border rounded p-2 bg-light ml-3 mb-2 flex-grow-1">{{ question['answerChoices'][3] }}</p>
                     </div>
-                    <div class="form-inline">
-                        <input type="radio" class="ml-5 mr-3" {% if question['answer'] == question['optionD'] %} checked disabled {% else %} disabled {% endif %}>
-                        <p class="border rounded p-2 bg-light ml-3 mb-2 flex-grow-1">{{ question['optionD'] }}</p>
-                    </div>
+                    -->
                 </div>
             </div>
         </div>
         {% endfor %}
     {% endif %}    
 
-    <form method="post" action="">
+    <form method="post" action="/update">
+
+        <div class="row my-2 justify-content-center align-items-center" {% if quiz_data['name'] %} style="display: none;" {% endif %}>
+            <div class="col-md-9">
+                <div class="shadow-sm p-4 rounded bg-white">
+                    <div class="form-inline">
+                        <label for="quiztitle" class="mb-2">Quiz Title:</label>
+                        <input type="text" name="quiztitle" class="form-control ml-4 mb-2 flex-grow-1 bg-light" placeholder="Enter the title of the quiz" value>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="row my-2 justify-content-center align-items-center" {% if quiz_data['description'] %} style="display: none;" {% endif %}>
+            <div class="col-md-9">
+                <div class="shadow-sm p-4 rounded bg-white">
+                    <div class="form-inline">
+                        <label for="quizdescription" class="mb-2">Description:</label>
+                        <input type="text" name="quizdescription" class="form-control ml-2 mb-2 flex-grow-1 bg-light" placeholder="Enter the discription of the quiz" value>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row my-2 justify-content-center align-items-center">
             <div class="col-md-9">
                 <div class="shadow-sm p-4 rounded bg-white">
 
                     <div class="form-inline">
-                        <label for="question" class="mb-2">Question {{ quiz_data['questions']|length + 1 }}</label>
+                        <label for="question" class="mb-2">Question {{ quiz_data['quiz']|length + 1 }}</label>
                         <input type="text" name="question" class="form-control mx-3 mb-2 flex-grow-1 bg-light" placeholder="Enter a question here">
                     </div>
                     <div class="form-inline">
