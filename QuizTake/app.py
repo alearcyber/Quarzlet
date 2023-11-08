@@ -125,12 +125,29 @@ def login():
     
     # Check if the response was successful, if not, send to login page with error
     if response.status_code == 200:
-        session['auth'] = '1'
-        return redirect(url_for("welcome"))
+        data = response.json()
+        status = data['status']
+        if status == '0':
+            session['auth'] = '0'
+            return render_template("login.html", error="Invalid username or password")
+        else:
+            # Authentication successful, redirect to welcome page
+            session['auth'] = '1'
+            return redirect(url_for("welcome"))
     else:
-        return render_template("login.html", error="Invalid username or password")
+        return render_template("login.html", error="Error in authentication")
 
-@app.route("/welcome", methods=["POST"])
+@app.route("/logout")
+def logout():
+    # Logout page for the app
+    
+    # Clear the session variables
+    session.clear()
+    
+    # Redirect to login page
+    return redirect(url_for("index"))
+
+@app.route("/welcome")
 def welcome():
     # Landing page for the app
     
