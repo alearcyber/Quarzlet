@@ -133,13 +133,13 @@ def login():
         status = data['status']
         if status == '0':
             session['auth'] = '0'
-            return render_template("login.html", error="Invalid username or password!")
+            return render_template("login.html", error="Invalid username or password!", isLogin=True)
         else:
             # Authentication successful, redirect to welcome page
             session['auth'] = '1'
             return redirect(url_for("welcome"))
     else:
-        return render_template("login.html", error=f"Error in authentication! Status Code: {response.status_code}")
+        return render_template("login.html", error=f"Error in authentication! Status Code: {response.status_code}", isLogin=True)
 
 @app.route("/logout")
 def logout():
