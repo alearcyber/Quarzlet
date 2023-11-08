@@ -85,10 +85,78 @@ def addquiz():
 
 # retrieves the available quizzes and sends them back to the client.
 # Expects a GET request with no body.
-# TODO - IMPLEMENT THIS
 @app.route('/available', methods=['GET'])
 def available():
     return jsonify(available_quizzes())
+
+
+@app.route('/deletequiz', methods=['POST'])
+def delete_quiz():
+    print("QuizStore LOG - Received request to remove a quiz from the database. Parsing data received...")
+
+    #first, determine what quiz it is
+    try:
+        content: dict = request.json
+    except:
+        print("QuizStore LOG - could not find JSON or it was not proper JSON formatting.")
+        return "ERROR: JSONParseError - The JSON could not be found, or it could not be parsed as JSON", 462
+    try:
+        quiz_name = content['name']
+    except:
+        print("QuizStore LOG - could not find the quiz name in the JSON.")
+        return f"ERROR: PoorlyFormattedRequest - \"name\" key cannot be found.", 460
+    print(f"QuizStore LOG - received request to remove {quiz_name}.")
+
+
+    #now see if that quiz exists in the first place
+    if not does_quiz_exist(quiz_name):
+        print("QuizStore LOG - could not find the quiz name in the JSON.")
+        return f"ERROR: QuizNotFound - Could not find a quiz with the name: {quiz_name}", 461
+    print("QuizStore LOG - Found quiz in database, attempting to remove...")
+
+
+
+    #grab all the wrong answers associated with the quiz name
+    q = """
+        SELECT
+            wrong.question_text
+        FROM
+            question JOIN wrong
+        ON
+            wrong.question_text = question.question_text
+        WHERE
+            question.quiz_name=?
+        """
+    results = query(q, (quiz_name,))
+    wrong_answers = set() # set of wrong answers associated with the quiz name
+    for row in results:
+        wrong_answers.add(row[0])
+
+
+
+    #Delete the wrong answers
+    q = """
+        DELETE FROM 
+            wrong
+        WHERE
+            wrong.question_text=?
+        """
+    for wrong_answer in wrong_answers:
+        query(q, (wrong_answer,))
+    print("QuizStore LOG - Deleted the following wrong answers:", wrong_answers)
+
+
+
+    #delete the questions and quiz
+    q = """DELETE FROM question WHERE quiz_name=?"""
+    q2 = """DELETE FROM quiz WHERE name=?"""
+    query(q, (quiz_name,))
+    query(q2, (quiz_name,))
+
+
+    #print status and return success
+    print("QuizStore LOG - Deleted the quiz and question entries. Done with delete operation.")
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 
 ################################################################################################
@@ -131,7 +199,7 @@ def get_quiz(name):
 
     # create list of questions
     questions = []
-    for _, _, question, _, _ in results:
+    for question in correct_answers:
         q = dict()  # dictionary to represent a question in the list of questions
         q["question"] = question
         q["correctanswer"] = correct_answers[question]
