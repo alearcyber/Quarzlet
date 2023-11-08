@@ -16,6 +16,7 @@ The Quarzlet cloud application allows users to create their own multiple choice 
 - QuizTake: Entry point for the product. Allows user to select and take a quiz. The quiz gets scored and the results are presented to the user. Allows user to delete quizzes.
 - QuizMake: Allows user to create a new quiz and add it to the database in QuizStore.
 - QuizStore: Provides interfacing for database queries and communicates with QuizTake and QuizMake via HTTP requests.
+- QuizAuth: Authenticates user credentials.
 
 ## Structure
 
@@ -24,8 +25,9 @@ Each service runs within separate Docker containers that communicate with each o
 - QuizTake: Port 8000
 - QuizMake: Port 8001
 - QuizStore: Port 8002
+- QuizAuth: Port 8003
 
-Docker compose is used to spin up all the containers and link them together.
+Docker compose is used to start and link all the service containers.
 
 ![Quarzlet Service Structure](documentation/Service-Components.png)
 
@@ -46,10 +48,22 @@ To stop the application, run the following:
 
 `docker compose down`
 
-Once the containers are running, you can access the site from the url  
-[http://127.0.0.1:8000](http://127.0.0.1:8000)
+Once the containers are running, you can access the site by typing [http://127.0.0.1:8000](http://127.0.0.1:8000) into your browser.
+
+## External Software Used
+
+- [Docker Build v0.11.2](https://www.docker.com/get-started/) - Builds Docker images from Dockerfiles and source
+- [Docker Compose v2.23.0](https://docs.docker.com/compose/install/) - Starts and links multiple Docker containers
+- [Docker Engine v24.0.7](https://docs.docker.com/engine/install/) - Daemon to run Docker containers
+- [Flask v2.3.3](https://pypi.org/project/Flask) - Python Web Framework
+- [Python v3.10](https://www.python.org/downloads/) - Programming Language
+- [SQLite v0.5.1](https://pypi.org/project/pysqlite3/) - Lightweight Relational Database
+
+## External Services Used
+
+No external services used.
 
 ## Credits
 
 - Base CSS provided by [Bootstrap v4.0](https://getbootstrap.com/)
-- The sidebar in QuizTake service used HTML and CSS inspired from [Bootstrap Examples](https://getbootstrap.com/docs/4.1/examples/) - [Dashboard](https://getbootstrap.com/docs/4.1/examples/dashboard)
+- The sidebar in QuizTake used HTML and CSS inspired from [Bootstrap Examples](https://getbootstrap.com/docs/4.1/examples/) - [Dashboard](https://getbootstrap.com/docs/4.1/examples/dashboard)
