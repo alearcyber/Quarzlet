@@ -18,14 +18,15 @@
         <!--Navbar -->
         <div class="row no-gutters" style="height: 8vh">
             <nav class="navbar navbar-custom navbar-expand-lg flex-md-nowrap p-2">
-                <a class="navbar-brand col-sm-1 mr-0" href="{{ url_for('welcome') }}">Quarzlet</a>
+                <a class="navbar-brand col-sm-1 mr-0" href="{{ url_for('index') }}">Quarzlet</a>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item text-nowrap">
-                            <a class="nav-link active" href="{{ url_for('welcome') }}">Home</a>
+                            <a class="nav-link active" href="{{ url_for('index') }}">Home</a>
                         </li>
                     </ul>
+                    {% if not isLogin %}
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item text-nowrap">
                             <a class="nav-link active" href="http://127.0.0.1:8001?auth={{auth}}">Make Quiz</a>
@@ -34,6 +35,7 @@
                             <a class="nav-link active" href="{{ url_for('logout') }}">Logout <img src="{{ url_for('static', filename='logout.png') }}" class="logout-button-img" alt="logout" border="0" /></a>
                         </li>
                     </ul>
+                    {% endif %}
                 </div>
             </nav>
         </div>

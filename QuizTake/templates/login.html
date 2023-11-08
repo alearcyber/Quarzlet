@@ -26,11 +26,15 @@
                     <!--Password-->
                     <label class="form-control" for="password" style="margin-top: 1rem; font-size: 2rem">
                         Password
-                        <input class="form-control" type="text" name="password" id="password" placeholder="Enter password here" required />
+                        <input class="form-control" type="password" name="password" id="password" placeholder="Enter password here" autocomplete="off" required />
                     </label>
                 </div>
+                {% if error %}
+                <p class="error px-4"><strong>Error:</strong> {{error}}</p>
+                {% endif %}
                 <div class="form-row px-3 py-4">
                     <div class="col-xl-12">
+                        <!--Submit Button-->
                         <button type="submit" class="w-100 btn btn-lg btn-outline-primary" style="height: 3rem; font-size: 1.5rem; text-align: center">Log In</button>
                     </div>
                 </div>

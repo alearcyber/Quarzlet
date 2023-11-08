@@ -80,8 +80,7 @@ def refresh_global_variables():
     # Check if the session variables are initialized, if not, query the quiz list
     if not ('quizzes' in session
             and 'quizzes_len' in session
-            and 'current_quiz' in session
-            and 'auth' in session):
+            and 'current_quiz' in session):
         query_quiz_list()
     
     # Update the global variables for the quiz list and the current quiz.
@@ -96,6 +95,10 @@ def clear_session():
     authenticated = session.pop('auth', False)
     session.clear()
     session['auth'] = authenticated
+    
+def verify_auth():
+    # Returns True if the user is authenticated, if not, redirect to login page
+    return 'auth' in session and session['auth'] == '1'
 
 ###################################################################
 # App Routes
@@ -106,11 +109,12 @@ def index():
     
     # User is authenticated, redirect to welcome page
     if 'auth' in session and session['auth'] == '1':
+        app.jinja_env.globals.update(isLogin=False)
         return redirect(url_for("welcome"))
     
     # Otherwise, force authentication on the user
     else:
-        return render_template("login.html")
+        return render_template("login.html", isLogin=True)
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -129,13 +133,13 @@ def login():
         status = data['status']
         if status == '0':
             session['auth'] = '0'
-            return render_template("login.html", error="Invalid username or password")
+            return render_template("login.html", error="Invalid username or password!")
         else:
             # Authentication successful, redirect to welcome page
             session['auth'] = '1'
             return redirect(url_for("welcome"))
     else:
-        return render_template("login.html", error="Error in authentication")
+        return render_template("login.html", error=f"Error in authentication! Status Code: {response.status_code}")
 
 @app.route("/logout")
 def logout():
@@ -149,7 +153,8 @@ def logout():
 
 @app.route("/welcome")
 def welcome():
-    # Landing page for the app
+    if not verify_auth():
+        return redirect(url_for("index"))
     
     # Quiz list for sidebar
     clear_session()
@@ -160,6 +165,9 @@ def welcome():
 
 @app.route("/quiz")
 def quiz():
+    if not verify_auth():
+        return redirect(url_for("index"))
+    
     # Recalcuate the quiz list because for some reason the global variables are not getting preserved
     refresh_global_variables()
     
@@ -213,6 +221,9 @@ def quiz():
 
 @app.route("/submit", methods=["POST"])
 def grade_quiz():
+    if not verify_auth():
+        return redirect(url_for("index"))
+    
     if request.method != 'POST':
         return render_template("quiz_not_found.html")
 
@@ -242,6 +253,9 @@ def grade_quiz():
 
 @app.route("/deletequiz")
 def delete_quiz():
+    if not verify_auth():
+        return redirect(url_for("index"))
+    
     # Delete button pressed, send request to QuizStore to delete quiz
     url = "http://quarzlet-store:8002/deletequiz"
     payload = {"name": session['current_quiz']}
@@ -252,6 +266,9 @@ def delete_quiz():
 
 @app.route("/quiz_not_found")
 def quiz_not_found():
+    if not verify_auth():
+        return redirect(url_for("index"))
+    
     # Update current quiz name in session and render webpage
     session['current_quiz'] = ""
     app.jinja_env.globals.update(current_quiz=session['current_quiz'])

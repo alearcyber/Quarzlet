@@ -21,3 +21,7 @@ input[type="text"]:focus {
 .form-control + .form-control {
     margin-top: 2em;
 }
+
+.error {
+    color: #cf1616;
+}

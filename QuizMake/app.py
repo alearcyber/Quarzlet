@@ -30,14 +30,17 @@ def reset():
 # Initial page
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if app.jinja_env.globals['auth'] == None:
-            auth = request.args.get("auth")
-            app.jinja_env.globals['auth'] = auth
+    auth = '0'
+    try:
+        auth = request.args.get("auth")
+        app.jinja_env.globals['auth'] = auth
+    except:
+        auth = '0'
 
-    if auth == '0':
-        return render_template('authError.html')
-    else:
+    if auth and auth == '1':
         return render_template('index.html')
+    else:
+        return render_template('authError.html')
 
 # Handles form submission from the user and redirects
 @app.route('/update', methods=['POST'])
