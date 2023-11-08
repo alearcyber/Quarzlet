@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-
-{% extends 'index.html' %} {% block css%}
+{% extends 'welcome.html' %} {% block css%}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='css/content.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}" />
@@ -28,8 +26,8 @@
                 {% for quiz in quiz_data %} {{macros.build_quiz_content(num=quiz.question_num, question=quiz.question, answers=quiz.answers)}} {% endfor %}
 
                 <div class="form-row d-flex justify-content-end px-5 py-5">
-                    <button type="reset" class="btn btn-outline-secondary col-1" style="width: 20rem; height: 3rem; font-size: 1.5rem; left: 28px">Reset</button>
-                    <button type="submit" class="btn btn-outline-secondary col-3" style="width: 20rem; height: 3rem; font-size: 1.5rem; left: 28px">Submit</button>
+                    <button type="reset" class="btn btn-lg btn-outline-primary col-1" style="width: 20rem; height: 3rem; font-size: 1.5rem; left: 28px">Reset</button>
+                    <button type="submit" class="btn btn-lg btn-outline-primary col-3" style="width: 20rem; height: 3rem; font-size: 1.5rem; left: 28px">Submit</button>
                 </div>
             </div>
         </div>

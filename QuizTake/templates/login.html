@@ -1,30 +1,42 @@
-<!DOCTYPE html>
-
-{% import "macros.html" as macros %} {% extends 'base.html' %} {% block css%}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}" />
+{% extends 'base.html' %} {% block css%}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}" />
 {% endblock %} {% block content %}
 
-<div class="row my-2 justify-content-center align-items-center">
-    <div class="col-md-9">
-        <div class="shadow-sm p-4 rounded bg-white">
-            <form class="form-inline" id="login" action="/login" method="POST" style="height: 2.5rem; font-size: 1rem; left: 20px">
-                <!--Username Field-->
-                <label for="username" class="mb-2">
-                    <input type="text" name="username" class="form-control ml-4 mb-2 flex-grow-1 bg-light" placeholder="Username" required />
-                    Username
-                </label>
-                <!--Password Field-->
-                <label for="password" class="mb-2">
-                    <input type="text" name="password" class="form-control ml-4 mb-2 flex-grow-1 bg-light" placeholder="Password" required />
-                    Password
-                </label>
-
-                <!--Submit Button-->
-                <div class="form-row d-flex justify-content-end px-5 py-5">
-                    <button type="submit" class="btn btn-outline-secondary col-3" style="width: 20rem; height: 3rem; font-size: 1.5rem; left: 28px">Login</button>
-                </div>
-            </form>
+<div class="col-xl-12 ml-sm-auto px-4 content">
+    <!--Login Title-->
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-5">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mt-2 mb-3 border-bottom" style="width: 100%; word-break: break-word">
+                <h1 class="h1 col-11">Login</h1>
+            </div>
         </div>
     </div>
+
+    <form class="row" id="login" action="/login" method="POST" style="height: 2.5rem; font-size: 1rem; left: 20px">
+        <div class="col-xl-3"></div>
+        <div class="col-xl-5">
+            <div class="form-group">
+                <div class="form-row px-4">
+                    <!--Username-->
+                    <label class="form-control" for="username" style="margin-top: 1rem; font-size: 2rem">
+                        Username
+                        <input class="form-control" type="text" name="username" id="username" placeholder="Enter username here" required />
+                    </label>
+                    <!--Password-->
+                    <label class="form-control" for="password" style="margin-top: 1rem; font-size: 2rem">
+                        Password
+                        <input class="form-control" type="text" name="password" id="password" placeholder="Enter password here" required />
+                    </label>
+                </div>
+                <div class="form-row px-3 py-4">
+                    <div class="col-xl-12">
+                        <button type="submit" class="w-100 btn btn-lg btn-outline-primary" style="height: 3rem; font-size: 1.5rem; text-align: center">Log In</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
+
 {% endblock %}

@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-
-{% extends 'index.html' %} {% block css%}
+{% extends 'welcome.html' %} {% block css%}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='css/content.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}" />
@@ -25,7 +23,7 @@
                 correct_answer=results.quiz_data[i].correct_answer, answers=results.quiz_data[i].answers, user_answer=results.user_answers[i])}} {% endfor %}
 
                 <div class="form-row d-flex justify-content-end px-5 py-5">
-                    <a href="/quiz?quiz={{current_quiz}}" class="btn btn-outline-secondary" style="width: 20rem; height: 3rem; font-size: 1.5rem; left: 28px">Reset</a>
+                    <a href="/quiz?quiz={{current_quiz}}" class="btn btn-lg btn-outline-primary" style="width: 20rem; height: 3rem; font-size: 1.5rem; left: 28px">Reset</a>
                 </div>
             </div>
         </div>

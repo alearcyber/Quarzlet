@@ -216,6 +216,9 @@ def grade_quiz():
     if request.method != 'POST':
         return render_template("quiz_not_found.html")
 
+    # Recalcuate the quiz list because for some reason the global variables are not getting preserved
+    refresh_global_variables()
+
     user_answers = []
     num_correct = 0
 

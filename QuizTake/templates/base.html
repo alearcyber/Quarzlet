@@ -30,8 +30,8 @@
                         <li class="nav-item text-nowrap">
                             <a class="nav-link active" href="http://127.0.0.1:8001?auth={{auth}}">Make Quiz</a>
                         </li>
-                        <li class="nav-item text-nowrap">
-                            <a class="nav-link active" href="{{ url_for('logout') }}">Logout</a>
+                        <li class="nav-item text-nowrap" style="margin-left: 2px">
+                            <a class="nav-link active" href="{{ url_for('logout') }}">Logout <img src="{{ url_for('static', filename='logout.png') }}" class="logout-button-img" alt="logout" border="0" /></a>
                         </li>
                     </ul>
                 </div>

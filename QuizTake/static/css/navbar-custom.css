@@ -20,6 +20,17 @@
     font-size: 1.5rem;
 }
 
-.navbar-custom .nav-link:hover {
+.navbar-custom .nav-link:hover,
+.logout-button-img:hover {
     color: #adadad;
+    filter: brightness(0) saturate(100%) invert(79%) sepia(0%) saturate(0%) hue-rotate(121deg) brightness(89%) contrast(89%);
+}
+
+.logout-button-img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-left: 3px;
+    transform: translateY(-2px);
 }
