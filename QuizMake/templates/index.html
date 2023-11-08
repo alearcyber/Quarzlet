@@ -82,7 +82,7 @@
                 <div class="shadow-sm p-4 rounded bg-white">
                     <div class="form-inline">
                         <label for="quiztitle" class="mb-2">Quiz Title:</label>
-                        <input type="text" name="quiztitle" class="form-control ml-4 mb-2 flex-grow-1 bg-light" placeholder="Enter the title of the quiz" value>
+                        <input type="text" name="quiztitle" class="form-control ml-4 mb-2 flex-grow-1 bg-light" placeholder="Enter the title of the quiz" value required>
                     </div>
                 </div>
             </div>
@@ -93,7 +93,7 @@
                 <div class="shadow-sm p-4 rounded bg-white">
                     <div class="form-inline">
                         <label for="quizdescription" class="mb-2">Description:</label>
-                        <input type="text" name="quizdescription" class="form-control ml-2 mb-2 flex-grow-1 bg-light" placeholder="Enter the discription of the quiz" value>
+                        <input type="text" name="quizdescription" class="form-control ml-2 mb-2 flex-grow-1 bg-light" placeholder="Enter the discription of the quiz" value required>
                     </div>
                 </div>
             </div>
@@ -105,23 +105,23 @@
 
                     <div class="form-inline">
                         <label for="question" class="mb-2">Question {{ quiz_data['quiz']|length + 1 }}</label>
-                        <input type="text" name="question" class="form-control mx-3 mb-2 flex-grow-1 bg-light" placeholder="Enter a question here">
+                        <input type="text" name="question" class="form-control mx-3 mb-2 flex-grow-1 bg-light" placeholder="Enter a question here" required>
                     </div>
                     <div class="form-inline">
                         <input type="radio" class="ml-5 mr-3" name="correct" value="optionA" required>
-                        <input type="text" name="optionA" class="form-control mx-3 mb-2 flex-grow-1 bg-light" placeholder="Enter an answer choice">
+                        <input type="text" name="optionA" class="form-control mx-3 mb-2 flex-grow-1 bg-light" placeholder="Enter an answer choice" required>
                     </div>
                     <div class="form-inline">
                         <input type="radio" class="ml-5 mr-3" name="correct" value="optionB" required>
-                        <input type="text" name="optionB" class="form-control mx-3 mb-2 flex-grow-1 bg-light" placeholder="Enter an answer choice">
+                        <input type="text" name="optionB" class="form-control mx-3 mb-2 flex-grow-1 bg-light" placeholder="Enter an answer choice" required>
                     </div>
                     <div class="form-inline">
                         <input type="radio" class="ml-5 mr-3" name="correct" value="optionC" required> 
-                        <input type="text" name="optionC" class="form-control mx-3 mb-2 flex-grow-1 bg-light" placeholder="Enter an answer choice">
+                        <input type="text" name="optionC" class="form-control mx-3 mb-2 flex-grow-1 bg-light" placeholder="Enter an answer choice" required>
                     </div>
                     <div class="form-inline">
                         <input type="radio" class="ml-5 mr-3" name="correct" value="optionD" required> 
-                        <input type="text" name="optionD" class="form-control mx-3 mb-2 flex-grow-1 bg-light" placeholder="Enter an answer choice">
+                        <input type="text" name="optionD" class="form-control mx-3 mb-2 flex-grow-1 bg-light" placeholder="Enter an answer choice" required>
                     </div>
                 
                 </div>
