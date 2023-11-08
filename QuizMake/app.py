@@ -34,7 +34,7 @@ def index():
             auth = request.args.get("auth")
             app.jinja_env.globals['auth'] = auth
 
-    if auth == 0:
+    if auth == '0':
         return render_template('authError.html')
     else:
         return render_template('index.html')
