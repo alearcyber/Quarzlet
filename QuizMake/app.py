@@ -11,6 +11,7 @@ quiz_data = {
 }
 
 app.jinja_env.globals['quiz_data'] = quiz_data
+app.jinja_env.globals['auth'] = None
 
 # Handles resetting the data
 def reset():
@@ -19,6 +20,7 @@ def reset():
     quiz_data['quiz'] = []
 
     app.jinja_env.globals.update(quiz_data=quiz_data)
+    app.jinja_env.globals.update(auth=None)
 
 
 #################################################################################################
@@ -28,7 +30,14 @@ def reset():
 # Initial page
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template("index.html")
+    if app.jinja_env.globals['auth'] == None:
+            auth = request.args.get("auth")
+            app.jinja_env.globals['auth'] = auth
+
+    if auth == 0:
+        return render_template('authError.html')
+    else:
+        return render_template('index.html')
 
 # Handles form submission from the user and redirects
 @app.route('/update', methods=['POST'])
