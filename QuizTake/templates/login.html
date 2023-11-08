@@ -7,12 +7,23 @@
 <div class="row my-2 justify-content-center align-items-center">
     <div class="col-md-9">
         <div class="shadow-sm p-4 rounded bg-white">
-            <div class="form-inline">
-                <label for="quiztitle" class="mb-2">
+            <form class="form-inline">
+                <!--Username Field-->
+                <label for="username" class="mb-2">
                     <input type="text" name="username" class="form-control ml-4 mb-2 flex-grow-1 bg-light" placeholder="Username" required />
                     Username
                 </label>
-            </div>
+                <!--Password Field-->
+                <label for="password" class="mb-2">
+                    <input type="text" name="password" class="form-control ml-4 mb-2 flex-grow-1 bg-light" placeholder="Password" required />
+                    Password
+                </label>
+
+                <!--Submit Button-->
+                <div class="form-row d-flex justify-content-end px-5 py-5">
+                    <button type="submit" class="btn btn-outline-secondary col-3" style="width: 20rem; height: 3rem; font-size: 1.5rem; left: 28px">Login</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

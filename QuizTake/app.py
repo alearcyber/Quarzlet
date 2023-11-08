@@ -87,7 +87,8 @@ def refresh_global_variables():
     # Update the global variables for the quiz list and the current quiz.
     # quizzes_len is used by the Jinja syntax to determine if the quiz list is empty or not.
     app.jinja_env.globals.update(
-        quizzes=session['quizzes'], quizzes_len=session['quizzes_len'], current_quiz=session['current_quiz'])
+        quizzes=session['quizzes'], quizzes_len=session['quizzes_len'], current_quiz=session['current_quiz'], auth=session['auth'])
+    
 
 def clear_session():
     # Clears the session variables
@@ -103,8 +104,13 @@ def clear_session():
 def index():
     # Landing page for the app
     
-    # Force authentication on the user
-    return redirect(url_for("login"))
+    # User is authenticated, redirect to welcome page
+    if 'auth' in session and session['auth'] == '1':
+        return redirect(url_for("welcome"))
+    
+    # Otherwise, force authentication on the user
+    else:
+        return render_template("login.html")
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -114,6 +120,15 @@ def login():
     
     username = request.form.get("username")
     password = request.form.get("password")
+    
+    response = requests.post("http://quarzlet-auth:8003/authenticate", json={"username": username, "password": password})
+    
+    # Check if the response was successful, if not, send to login page with error
+    if response.status_code == 200:
+        session['auth'] = '1'
+        return redirect(url_for("welcome"))
+    else:
+        return render_template("login.html", error="Invalid username or password")
 
 @app.route("/welcome", methods=["POST"])
 def welcome():
