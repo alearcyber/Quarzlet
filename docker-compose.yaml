@@ -11,11 +11,11 @@ services:
         build: ./QuizTake
         ports:
             - "8000:8000"
-        develop:
-            watch:
-                - action: rebuild
-                  path: ./QuizTake
-                  target: /app
+        # develop:
+        #     watch:
+        #         - action: rebuild
+        #           path: ./QuizTake
+        #           target: /app
 
     quarzlet-auth:
         build: .\QuizAuth
