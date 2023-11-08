@@ -27,7 +27,7 @@ Each service runs within separate Docker containers that communicate with each o
 
 Docker compose is used to spin up all the containers and link them together.
 
-![Quarzlet Service Structure](documentation/Diagram-REST-Components.png)
+![Quarzlet Service Structure](documentation/Service-Components.png)
 
 ## Installation
 
