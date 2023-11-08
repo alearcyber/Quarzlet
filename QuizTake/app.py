@@ -78,7 +78,10 @@ def refresh_global_variables():
     # Refreshes the global variables for the quiz list and the current quiz.
     
     # Check if the session variables are initialized, if not, query the quiz list
-    if not ('quizzes' in session and 'quizzes_len' in session and 'current_quiz' in session):
+    if not ('quizzes' in session
+            and 'quizzes_len' in session
+            and 'current_quiz' in session
+            and 'auth' in session):
         query_quiz_list()
     
     # Update the global variables for the quiz list and the current quiz.
@@ -86,7 +89,12 @@ def refresh_global_variables():
     app.jinja_env.globals.update(
         quizzes=session['quizzes'], quizzes_len=session['quizzes_len'], current_quiz=session['current_quiz'])
 
-
+def clear_session():
+    # Clears the session variables
+    authenticated = False
+    authenticated = session.pop('auth', False)
+    session.clear()
+    session['auth'] = authenticated
 
 ###################################################################
 # App Routes
@@ -94,12 +102,28 @@ def refresh_global_variables():
 @app.route("/")
 def index():
     # Landing page for the app
+    
+    # Force authentication on the user
+    return redirect(url_for("login"))
 
+@app.route("/login", methods=["POST"])
+def login():
+    # Login page for the app
+    if request.method != 'POST':
+        return render_template("<h1>405 Method Not Allowed</h1>")
+    
+    username = request.form.get("username")
+    password = request.form.get("password")
+
+@app.route("/welcome", methods=["POST"])
+def welcome():
+    # Landing page for the app
+    
     # Quiz list for sidebar
-    session.clear()
+    clear_session()
     refresh_global_variables()
     
-    return render_template("index.html")
+    return render_template("welcome.html")
 
 
 @app.route("/quiz")
@@ -169,7 +193,7 @@ def grade_quiz():
     # Check user answers against correct answers
     for question in quiz_data:
         question_num = question["question_num"]
-        user_answer = request.form.get("question{}".format(question_num))
+        user_answer = request.form.get(f"question{question_num}")
         user_answers.append(user_answer)
         if user_answer == question["correct_answer"]:
             num_correct += 1
