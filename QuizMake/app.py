@@ -49,7 +49,7 @@ def updateData():
         return redirect(url_for('index') + f"?auth={app.jinja_env.globals.get('auth')}")
     
     if not(len(quiz_data['name']) > 0 and len(quiz_data['description']) > 0):
-        quiz_data['name'] = request.form.get('quiztitle')
+        quiz_data['name'] = request.form.get('quizname')
         quiz_data['description'] = request.form.get('quizdescription')
     
     form_data = {
