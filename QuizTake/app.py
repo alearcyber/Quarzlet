@@ -63,6 +63,9 @@ def query_quiz_list():
     quiz_titles = []
     for quiz in data:
         quiz_titles.append(quiz['name'])
+    
+    # Quiz titles in chronological order, so reverse it so most recently added is on top
+    quiz_titles.reverse()
 
     # Assign a url for every quiz title
     quiz_urls = []
