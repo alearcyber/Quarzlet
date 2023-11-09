@@ -10,14 +10,14 @@ quiz_data = {
     'quiz': []
 }
 
-app.jinja_env.globals['quiz_data'] = quiz_data
-app.jinja_env.globals['auth'] = None
+app.jinja_env.globals.update(quiz_data=quiz_data)
+app.jinja_env.globals.update(auth=None)
 
 # Handles resetting the data
 def reset():
     quiz_data['name'] = ''
     quiz_data['description'] = ''
-    quiz_data['quiz'] = []
+    quiz_data['quiz'].clear()
 
     app.jinja_env.globals.update(quiz_data=quiz_data)
     app.jinja_env.globals.update(auth=None)
@@ -33,7 +33,7 @@ def index():
     auth = '0'
     try:
         auth = request.args.get("auth")
-        app.jinja_env.globals['auth'] = auth
+        app.jinja_env.globals.update(auth=auth)
     except:
         auth = '0'
 
@@ -46,7 +46,7 @@ def index():
 @app.route('/update', methods=['POST'])
 def updateData():
     if request.method != 'POST':
-        return redirect(url_for('index'))
+        return redirect(url_for('index') + f"?auth={app.jinja_env.globals.get('auth')}")
     
     if not(len(quiz_data['name']) > 0 and len(quiz_data['description']) > 0):
         quiz_data['name'] = request.form.get('quiztitle')
@@ -67,7 +67,7 @@ def updateData():
 
     app.jinja_env.globals.update(quiz_data=quiz_data)
 
-    return redirect(url_for('index'))
+    return redirect(url_for('index') + f"?auth={app.jinja_env.globals.get('auth')}")
     
 # Sends the data to the QuizStore and redirects to the main page
 @app.route('/congrats', methods=['GET', 'POST'])
@@ -82,8 +82,12 @@ def submitQuiz():
             response = requests.post(url, json=quiz_data)
 
             reset()
-            
             return render_template("congrats.html")
+        
+@app.route('/back')
+def back():
+    app.jinja_env.globals.update(auth=None)
+    return redirect("http://127.0.0.1:8000/")
 
 
 if __name__ == '__main__':

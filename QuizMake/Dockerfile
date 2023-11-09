@@ -15,11 +15,10 @@ WORKDIR /app
 # install the dependencies and packages in the requirements file
 RUN pip install -r requirements.txt
 
-#copy necissary files
+#copy necessary files
 COPY app.py /app
 COPY templates/ /app/templates
 COPY static/ /app/static
-COPY app.py /app
 
 EXPOSE $PORT
 

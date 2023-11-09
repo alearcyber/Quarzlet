@@ -108,7 +108,7 @@ def index():
     # Landing page for the app
     
     # User is authenticated, redirect to welcome page
-    if 'auth' in session and session['auth'] == '1':
+    if verify_auth():
         app.jinja_env.globals.update(isLogin=False)
         return redirect(url_for("welcome"))
     

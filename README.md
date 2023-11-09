@@ -9,6 +9,8 @@ The Quarzlet cloud application allows users to create their own multiple choice 
   - [Structure](#structure)
   - [Installation](#installation)
   - [Run](#run)
+  - [External Software Used](#external-software-used)
+  - [External Services Used](#external-services-used)
   - [Credits](#credits)
 
 ## Services
@@ -49,6 +51,8 @@ To stop the application, run the following:
 `docker compose down`
 
 Once the containers are running, you can access the site by typing [http://127.0.0.1:8000](http://127.0.0.1:8000) into your browser.
+
+By default, the username and password will both be "admin" and the database will be loaded with three sample quizzes.
 
 ## External Software Used
 

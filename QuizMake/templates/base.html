@@ -19,12 +19,12 @@
         <!--Navbar -->
         <div class="row no-gutters" style="height: 8vh">
             <nav class="navbar navbar-custom navbar-expand-lg flex-md-nowrap p-2">
-                <a href="http://127.0.0.1:8000" class="navbar-brand col-sm-1 mr-0">Quarzlet</a>
+                <a href="{{ url_for( 'back' ) }}" class="navbar-brand col-sm-1 mr-0">Quarzlet</a>
 
                 <div class="collapse navbar-collapse ml-4" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item text-nowrap">
-                            <a href="http://127.0.0.1:8000" class="nav-link active">Home</a>
+                            <a href="{{ url_for( 'back' ) }}" class="nav-link active">Home</a>
                         </li>
                     </ul>
                 </div>
