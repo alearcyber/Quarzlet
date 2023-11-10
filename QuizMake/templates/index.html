@@ -112,7 +112,7 @@
 <form method="post" action="/congrats">
     <div class="row no-gutters fixed-bottom" style="height: 8vh">
         <nav class="navbar navbar-custom navbar-expand-lg flex-md-nowrap p-2">
-            <button class="btn btn-outline-light ml-auto mr-4" type="submit" name="createQuiz">Create</button>
+            <button class="btn btn-outline-light ml-auto mr-4" type="submit" name="createQuiz" {% if not(0 < quiz_data['quiz']|length) %} disabled {% else %} {% endif %}>Create</button>
         </nav>
     </div>
 </form>
